@@ -16,7 +16,8 @@ public class Toernooi {
     public static void main(String[] args) {
         System.out.println("Hello pokerworld!");
         System.out.println("Danielle is in the house");
-        System.out.println("Stefan is also in the house");
+        System.out.println("Stefan is also in the ");
+        System.out.println("Bla bla");
     }
     
 }
