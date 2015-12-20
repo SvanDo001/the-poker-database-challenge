@@ -19,6 +19,7 @@ public class Toernooi {
         System.out.println("Stefan is also in the ");
         System.out.println("Bla bla, bla");
         System.out.println("Hoi!");
+        System.out.println("Over een half uurtje wil ik aftaaien zegt Danielle");
     }
     
 }
