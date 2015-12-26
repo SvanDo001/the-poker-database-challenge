@@ -1,3 +1,6 @@
+
+import javax.swing.JFrame;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,12 +17,10 @@ public class Toernooi {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hello pokerworld!");
-        System.out.println("Danielle is in the house");
-        System.out.println("Stefan is also in the ");
-        System.out.println("Bla bla, bla");
-        System.out.println("Hoi!");
-        System.out.println("Over een half uurtje wil ik aftaaien zegt Danielle");
+        JFrame frame = new FullHouse();
+        //centreer het frame:
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
     
 }
