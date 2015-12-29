@@ -1,7 +1,3 @@
-
-
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,15 +33,16 @@ public class SimpleDataSourceV2
    */
    private static void init(){
        
-       Properties prop = new Properties(); // klasse is Properties, naam object is prop
-       //prop.load(null);
+       Properties prop = new Properties(); // klasse is Properties, naam object 
+       //is prop prop.load(null);
 
       
        try {
         String driver = "com.mysql.jdbc.Driver";
         Class.forName(driver);
                
-        InputStream stream = SimpleDataSourceV2.class.getResourceAsStream("DatabaseAccess.properties");
+        InputStream stream = SimpleDataSourceV2.class.getResourceAsStream
+        ("DatabaseAccess.properties");
         //Properties prop = new Properties();
         prop.load(stream);
         
@@ -91,8 +88,8 @@ public class SimpleDataSourceV2
    private static Connection createConnection() throws SQLException
    {
 
-        String connectionString = "jdbc:mysql://" + dbserver + "/" + database + "?" +
-                "user=" + username + "&password=" + password;
+        String connectionString = "jdbc:mysql://" + dbserver + "/" + database + 
+                "?" + "user=" + username + "&password=" + password;
 
        return DriverManager.getConnection(connectionString);
    }

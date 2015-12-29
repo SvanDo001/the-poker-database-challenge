@@ -4,9 +4,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Vector;
-import javax.swing.JFrame;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -14,18 +11,20 @@ import javax.swing.table.DefaultTableModel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Danielle
  */
 public class FullHouse extends javax.swing.JFrame {
 
+    public static String query;
+
     /**
      * Creates new form FullHouse
      */
     public FullHouse() {
         initComponents();
+        geplandeToernooien();
     }
 
     /**
@@ -39,34 +38,64 @@ public class FullHouse extends javax.swing.JFrame {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        geplandeToernooien = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btOverzichtSpelersAdres = new javax.swing.JButton();
+        btOverzichtSpelersRating = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("FULL HOUSE");
+        setMinimumSize(new java.awt.Dimension(1024, 768));
+
+        geplandeToernooien.setAutoCreateRowSorter(true);
+        geplandeToernooien.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(geplandeToernooien);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 679, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Geplande toernooien", jPanel1);
 
         jLabel1.setText("Registreer nieuwe speler (inactief)");
 
-        jButton1.setText("Overzicht spelers");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btOverzichtSpelersAdres.setText("Overzicht spelers - Adresgegevens");
+        btOverzichtSpelersAdres.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btOverzichtSpelersAdres.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btOverzichtSpelersAdres.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btOverzichtSpelersAdresActionPerformed(evt);
+            }
+        });
+
+        btOverzichtSpelersRating.setText("Overzicht spelers - Rating en gewonnen inleggeld");
+        btOverzichtSpelersRating.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btOverzichtSpelersRating.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btOverzichtSpelersRating.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btOverzichtSpelersRatingActionPerformed(evt);
             }
         });
 
@@ -78,17 +107,23 @@ public class FullHouse extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addContainerGap(504, Short.MAX_VALUE))
+                    .addComponent(btOverzichtSpelersAdres, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btOverzichtSpelersRating))
+                .addGap(420, 420, 420))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btOverzichtSpelersAdres, btOverzichtSpelersRating});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addComponent(btOverzichtSpelersAdres)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btOverzichtSpelersRating)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Spelers", jPanel2);
@@ -97,11 +132,11 @@ public class FullHouse extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 679, Short.MAX_VALUE)
+            .addGap(0, 699, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Tafelindeling toernooi", jPanel3);
@@ -114,7 +149,7 @@ public class FullHouse extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Ingeschreven spelers", jPanel4);
@@ -127,10 +162,13 @@ public class FullHouse extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGap(0, 254, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("tab5", jPanel5);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel2.setText("FullHouse");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,28 +176,38 @@ public class FullHouse extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        spelersOverzicht();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btOverzichtSpelersAdresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOverzichtSpelersAdresActionPerformed
+        spelersOverzichtAdres();
+    }//GEN-LAST:event_btOverzichtSpelersAdresActionPerformed
+
+    private void btOverzichtSpelersRatingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOverzichtSpelersRatingActionPerformed
+        spelersOverzichtRating();
+    }//GEN-LAST:event_btOverzichtSpelersRatingActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -192,22 +240,70 @@ public class FullHouse extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btOverzichtSpelersAdres;
+    private javax.swing.JButton btOverzichtSpelersRating;
+    private javax.swing.JTable geplandeToernooien;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
-    private void spelersOverzicht() {
+    private void geplandeToernooien() {
+        try {
+            Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            ResultSet result = stat.executeQuery("SELECT * FROM Toernooi");
+            // vraag aantal kolommen uit metadata tabel
+            ResultSetMetaData md = result.getMetaData();
+            int aantalKolommen = md.getColumnCount();
+            // maak lege Array voor kolomnamen
+            String[] kolomnamen = {"Toernooi ID", "Soort Toernooi", "Datum", "Inleggeld", "Aantal Spelers", "Rating Masterclass", "Speler ID", "Locatie ID"};
+            // maak een DefaultTableModel met de naam tabelmodel, vul deze met 
+            // tabelSpeler (typecasten naar DefaultTableModel) 
+            DefaultTableModel tabelmodel = new DefaultTableModel() {
+                // maak typen in cel onmogelijk
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+                }
+            };
+            //ken kolomnamen toe aan tabelmodel
+            tabelmodel.setColumnIdentifiers(kolomnamen);
+            while (result.next()) {
+                Object[] rijgegevens = new Object[aantalKolommen];
+                for (int i = 0; i < aantalKolommen; i++) {
+                    rijgegevens[i] = result.getObject(i + 1);
+                    //kolomnamen[i] = md.getColumnName(i+1);
+                    //System.out.println("kolomnaam " + i + kolomnamen[i]);
+                }
+                tabelmodel.addRow(rijgegevens);
+            }
+            geplandeToernooien.setModel(tabelmodel);
+        } catch (SQLException e) {
+            System.out.println("SQL fout bij vullen lijst: " + e);
+        }
+    }
+
+    private void spelersOverzichtAdres() {
+        query = "SELECT spelerId, naam, straat, postcode, woonplaats, emailadres, telefoonnr from Speler";
         //creëer nieuw frame
         spelersOverzicht overzicht = new spelersOverzicht();
         //centreer het frame:
         overzicht.setLocationRelativeTo(null);
         overzicht.setVisible(true);
+    }
 
+    private void spelersOverzichtRating() {
+        query = "SELECT spelerId, naam, aantalRatingPuntenPoker,totaalGewonnenBedragPoker, aantalRatingPuntenBridge,totaalGewonnenBedragBridge,aantalRatingPuntenKlaverjassen,totaalGewonnenBedragKlaverjassen from Speler";
+        //creëer nieuw frame
+        spelersOverzicht overzicht = new spelersOverzicht();
+        //centreer het frame:
+        overzicht.setLocationRelativeTo(null);
+        overzicht.setVisible(true);
     }
 }

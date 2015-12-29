@@ -4,10 +4,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Vector;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -30,47 +26,40 @@ public class spelersOverzicht extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT * FROM makers");
-            // vraag aantal kolommen en rijen en inhoud op uit metadata tabel
+            String query = FullHouse.query;
+            ResultSet result = stat.executeQuery(query);
+            // vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
-            System.out.println("md: " + md);
-            int columnCount = md.getColumnCount();
-
-            System.out.println(columnCount);
-            //stop metadata in een Vectort, data is je verzameling rows         
-            Vector data = new Vector(columnCount);
-            Vector row = new Vector(columnCount);
-            Vector columnNames = new Vector(columnCount);
-
-            // zolang laatste kolom niet is bereikt: haal kolom naam op
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(md.getColumnName(i));
-            }
-            while (result.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    // voeg rijgegevens toe aan arraylist row
-                    row.add(result.getObject(i));
-
+            int aantalKolommen = md.getColumnCount();
+            // maak lege Array voor kolomnamen
+            String []  kolomnamen = new String [aantalKolommen];
+            // maak een DefaultTableModel met de naam tabelmodel, vul deze met 
+            // tabelSpeler (typecasten naar DefaultTableModel) 
+            DefaultTableModel tabelmodel = new DefaultTableModel() {
+                                // maak typen in cel onmogelijk
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
                 }
-                // voeg row toe aan arraylist data
-                data.add(row);
-                System.out.println("rijen: " + row);
-                //creeer een nieuwe row met gegevens uit de volgende rij
-                row = new Vector(columnCount);
-
+            };
+            // vul Array kolomnamen
+            for (int j=0; j< aantalKolommen; j++){
+                    kolomnamen[j] = md.getColumnName(j+1);
+                }
+            //ken kolomnamen toe aan tabelmodel
+            tabelmodel.setColumnIdentifiers(kolomnamen);
+            while (result.next()){
+                Object [] rijgegevens = new Object [aantalKolommen];
+                for (int i=0; i< aantalKolommen; i++){
+                    rijgegevens[i]= result.getObject(i+1);
+                }
+            tabelmodel.addRow(rijgegevens);
             }
-
-            System.out.println("kolomnamen: " + columnNames);
-            System.out.println("data: " + data);
-
-            DefaultTableModel model = new DefaultTableModel(data, columnNames);
-            tabelSpelers.setModel(model);  
-            //
+            
+            tabelSpelers.setModel(tabelmodel);
+            
         } catch (SQLException e) {
             System.out.println("SQL fout bij vullen lijst: " + e);
         }
-
-        //--
     }
 
     /**
@@ -87,19 +76,20 @@ public class spelersOverzicht extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("FULL HOUSE");
+        setMinimumSize(new java.awt.Dimension(1024, 768));
 
+        tabelSpelers.setAutoCreateRowSorter(true);
         tabelSpelers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tabelSpelers.setEnabled(false);
+        tabelSpelers.setFillsViewportHeight(true);
+        tabelSpelers.setName(""); // NOI18N
         jScrollPane1.setViewportView(tabelSpelers);
 
         jLabel1.setText("Spelersoverzicht");
@@ -111,17 +101,20 @@ public class spelersOverzicht extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 737, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
         );
 
         pack();
@@ -159,12 +152,6 @@ public class spelersOverzicht extends javax.swing.JFrame {
             public void run() {
                 new spelersOverzicht().setVisible(true);
                 
-                
-
-
-                //--
-
-                //--
             }
         });
     }
@@ -175,3 +162,10 @@ public class spelersOverzicht extends javax.swing.JFrame {
     private javax.swing.JTable tabelSpelers;
     // End of variables declaration//GEN-END:variables
 }
+
+
+//            tabelSpelers.setEnabled(false);
+//            tabelSpelers.setRowSelectionAllowed(true);
+//            System.out.println(tabelSpelers.getRowSelectionAllowed());
+//            System.out.println(tabelSpelers.getSelectedRow());
+//            System.out.println(tabelSpelers.isEnabled());
