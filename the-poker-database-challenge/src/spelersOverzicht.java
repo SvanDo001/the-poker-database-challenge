@@ -4,6 +4,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -22,6 +25,8 @@ public class spelersOverzicht extends javax.swing.JFrame {
      */
     public spelersOverzicht() {
         initComponents();
+        lbSpelersOverzicht.setText(FullHouse.labeltekst);
+
         //vul de tabel met gegevens uit de database
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
@@ -33,8 +38,7 @@ public class spelersOverzicht extends javax.swing.JFrame {
             int aantalKolommen = md.getColumnCount();
             // maak lege Array voor kolomnamen
             String []  kolomnamen = new String [aantalKolommen];
-            // maak een DefaultTableModel met de naam tabelmodel, vul deze met 
-            // tabelSpeler (typecasten naar DefaultTableModel) 
+            // maak een DefaultTableModel met de naam tabelmodel
             DefaultTableModel tabelmodel = new DefaultTableModel() {
                                 // maak typen in cel onmogelijk
                 public boolean isCellEditable(int rowIndex, int mColIndex) {
@@ -43,16 +47,26 @@ public class spelersOverzicht extends javax.swing.JFrame {
             };
             // vul Array kolomnamen
             for (int j=0; j< aantalKolommen; j++){
-                    kolomnamen[j] = md.getColumnName(j+1);
+                    kolomnamen[j] = md.getColumnLabel(j+1);
                 }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
-            while (result.next()){
-                Object [] rijgegevens = new Object [aantalKolommen];
-                for (int i=0; i< aantalKolommen; i++){
-                    rijgegevens[i]= result.getObject(i+1);
+            while (result.next()) {
+                Object[] rijgegevens = new Object[aantalKolommen];
+                for (int i = 0; i < aantalKolommen; i++) {
+                rijgegevens[i] = result.getObject(i + 1);
+                //zet datum uit sql om naar weergave normale nl datum
+                String datumsql = result.getString("datum");
+                    try {
+                        java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
+                        String datum = mySqlDateToString(sqlDate);
+                        //zet juiste datum terug in betreffende kolom: 2 bevat datum
+                        rijgegevens[2] = datum;
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                 }
-            tabelmodel.addRow(rijgegevens);
+                tabelmodel.addRow(rijgegevens);
             }
             
             tabelSpelers.setModel(tabelmodel);
@@ -73,7 +87,7 @@ public class spelersOverzicht extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelSpelers = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lbSpelersOverzicht = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FULL HOUSE");
@@ -92,7 +106,7 @@ public class spelersOverzicht extends javax.swing.JFrame {
         tabelSpelers.setName(""); // NOI18N
         jScrollPane1.setViewportView(tabelSpelers);
 
-        jLabel1.setText("Spelersoverzicht");
+        lbSpelersOverzicht.setText("Spelersoverzicht");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,7 +117,7 @@ public class spelersOverzicht extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lbSpelersOverzicht)
                         .addGap(0, 737, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -111,7 +125,7 @@ public class spelersOverzicht extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lbSpelersOverzicht)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(139, Short.MAX_VALUE))
@@ -157,13 +171,25 @@ public class spelersOverzicht extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbSpelersOverzicht;
     private javax.swing.JTable tabelSpelers;
     // End of variables declaration//GEN-END:variables
+
+
+private String mySqlDateToString (java.sql.Date date) {
+        /* ik schrijf de datum als dd-mm-yyyy */
+        DateFormat df = new SimpleDateFormat("dd-mm-yyyy");
+        return df.format(date);
+    }
+
+    private java.sql.Date dateStringToMySqlDate (String date) throws ParseException {
+        /* ik verwacht de datum tekst als yyyy-MM-dd */
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date parsed = format.parse(date);
+        return new java.sql.Date(parsed.getTime());
+    }
 }
-
-
 //            tabelSpelers.setEnabled(false);
 //            tabelSpelers.setRowSelectionAllowed(true);
 //            System.out.println(tabelSpelers.getRowSelectionAllowed());
