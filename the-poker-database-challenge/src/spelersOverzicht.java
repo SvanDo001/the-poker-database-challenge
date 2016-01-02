@@ -1,9 +1,4 @@
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -22,6 +17,7 @@ public class spelersOverzicht extends javax.swing.JFrame {
      */
     public spelersOverzicht() {
         initComponents();
+        labelOverzicht.setText(FullHouse.labeltekst);
         //vul de tabel met gegevens uit de database
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
@@ -68,11 +64,12 @@ public class spelersOverzicht extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelSpelers = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        labelOverzicht = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("FULL HOUSE");
@@ -80,10 +77,12 @@ public class spelersOverzicht extends javax.swing.JFrame {
 
         tabelSpelers.setAutoCreateRowSorter(true);
         tabelSpelers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
 
             },
-            new String [] {
+            new String []
+            {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
@@ -91,7 +90,8 @@ public class spelersOverzicht extends javax.swing.JFrame {
         tabelSpelers.setName(""); // NOI18N
         jScrollPane1.setViewportView(tabelSpelers);
 
-        jLabel1.setText("Spelersoverzicht");
+        labelOverzicht.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        labelOverzicht.setText("Spelersoverzicht");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,15 +102,15 @@ public class spelersOverzicht extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 737, Short.MAX_VALUE)))
+                        .addComponent(labelOverzicht)
+                        .addGap(0, 731, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(labelOverzicht)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(139, Short.MAX_VALUE))
@@ -156,8 +156,8 @@ public class spelersOverzicht extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelOverzicht;
     private javax.swing.JTable tabelSpelers;
     // End of variables declaration//GEN-END:variables
 }
