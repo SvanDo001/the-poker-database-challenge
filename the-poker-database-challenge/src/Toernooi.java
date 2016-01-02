@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 //toernooi regel 1 wijziging
+=======
+// wijziging test
+>>>>>>> origin/master
 import javax.swing.JFrame;
 
 /*
