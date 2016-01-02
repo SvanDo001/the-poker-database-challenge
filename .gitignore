@@ -11,3 +11,6 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 the-poker-database-challenge/nbproject/private/private.properties
+the-poker-database-challenge/build/built-jar.properties
+the-poker-database-challenge/build/built-jar.properties
+the-poker-database-challenge/build/classes/DatabaseAccess.properties

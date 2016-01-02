@@ -1,14 +1,7 @@
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.*;
+import java.text.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -438,8 +431,6 @@ public class FullHouse extends javax.swing.JFrame {
             //vul Array kolomnamen
             for (int j=0; j< aantalKolommen; j++){
                     kolomnamen[j] = md.getColumnLabel(j+1);
-                                System.out.println(kolomnamen[j]);
-
                 }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
@@ -451,9 +442,7 @@ public class FullHouse extends javax.swing.JFrame {
                 String datumsql = result.getString("datum");
                     try {
                         java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
-                        System.out.println(sqlDate);
                         String datum = mySqlDateToString(sqlDate);
-                        System.out.println(datum);
                         //zet juiste datum terug in betreffende kolom: 2 bevat datum
                         rijgegevens[2] = datum;
                     } catch (Exception e) {
@@ -506,15 +495,13 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT toernooiID, toernooiSoort, datum from toernooi where toernooiID = '" + toernooiID + "'");
+            ResultSet result = stat.executeQuery("SELECT toernooiID, toernooiSoort, datum from Toernooi where toernooiID = '" + toernooiID + "'");
             while (result.next()) {
                 int ID = result.getInt("toernooiID");
                 String datumsql = result.getString("datum");
                 try {
                     java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
-                    System.out.println(sqlDate);
                     String datum = mySqlDateToString(sqlDate);
-                    System.out.println(datum);
                     String soort = result.getString("toernooiSoort");
                     String jTF = "Toernooi nr " + Integer.toString(ID) + ": " + soort + " op " + datum;
                     tfToernooiSelectie.setText(jTF);
