@@ -51,8 +51,9 @@ public class FullHouse extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btOverzichtSpelersAdres = new javax.swing.JButton();
         btOverzichtSpelersRating = new javax.swing.JButton();
-        btTafelindelingRondeToernooi = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tafelIndelingToernooi = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -197,15 +198,6 @@ public class FullHouse extends javax.swing.JFrame {
             }
         });
 
-        btTafelindelingRondeToernooi.setText("Overzicht tafelindeling (per ronde) - Toernooi");
-        btTafelindelingRondeToernooi.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                btTafelindelingRondeToernooiActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -213,13 +205,10 @@ public class FullHouse extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btOverzichtSpelersAdres, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btTafelindelingRondeToernooi, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btOverzichtSpelersAdres, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addComponent(btOverzichtSpelersRating, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(452, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btOverzichtSpelersAdres, btOverzichtSpelersRating});
@@ -230,9 +219,7 @@ public class FullHouse extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btOverzichtSpelersAdres)
-                    .addComponent(btTafelindelingRondeToernooi))
+                .addComponent(btOverzichtSpelersAdres)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btOverzichtSpelersRating)
                 .addContainerGap(137, Short.MAX_VALUE))
@@ -240,15 +227,37 @@ public class FullHouse extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Spelers", jPanel2);
 
+        tafelIndelingToernooi.setAutoCreateRowSorter(true);
+        tafelIndelingToernooi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tafelIndelingToernooi.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                tafelIndelingToernooiMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tafelIndelingToernooi);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 758, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 758, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 275, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 151, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tafelindeling toernooi", jPanel3);
@@ -286,9 +295,9 @@ public class FullHouse extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
@@ -325,11 +334,6 @@ public class FullHouse extends javax.swing.JFrame {
         selecteerToernooi();
     }//GEN-LAST:event_geplandeToernooienMouseClicked
 
-    private void btTafelindelingRondeToernooiActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btTafelindelingRondeToernooiActionPerformed
-    {//GEN-HEADEREND:event_btTafelindelingRondeToernooiActionPerformed
-        tafelindelingRonde();
-    }//GEN-LAST:event_btTafelindelingRondeToernooiActionPerformed
-
     private void rbToernooiNietBetaaldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_rbToernooiNietBetaaldActionPerformed
     {//GEN-HEADEREND:event_rbToernooiNietBetaaldActionPerformed
         // TODO add your handling code here:
@@ -345,11 +349,15 @@ public class FullHouse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbToernooiWelBetaaldActionPerformed
 
+    private void tafelIndelingToernooiMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tafelIndelingToernooiMouseClicked
+    {//GEN-HEADEREND:event_tafelIndelingToernooiMouseClicked
+        tafelindelingRonde();
+    }//GEN-LAST:event_tafelIndelingToernooiMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btOpenOverzicht;
     private javax.swing.JButton btOverzichtSpelersAdres;
     private javax.swing.JButton btOverzichtSpelersRating;
-    private javax.swing.JButton btTafelindelingRondeToernooi;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTable geplandeToernooien;
     private javax.swing.JLabel jLabel1;
@@ -360,10 +368,12 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JRadioButton rbAlleNietBetaald;
     private javax.swing.JRadioButton rbToernooiNietBetaald;
     private javax.swing.JRadioButton rbToernooiWelBetaald;
+    private javax.swing.JTable tafelIndelingToernooi;
     private javax.swing.JTextField tfToernooiSelectie;
     // End of variables declaration//GEN-END:variables
 
@@ -445,12 +455,45 @@ public class FullHouse extends javax.swing.JFrame {
     
     private void tafelindelingRonde()
     {
-        query = "SELECT spelerID as 'Speler ID', rondeNummer as 'Ronde Nr.', tafelNummer as 'Tafel Nr.',maxAantalSpelers as 'Aantal Spelers', tafelWinnaar as 'Winnaar Tafel' FROM Tafel";
-        //creëer nieuw frame
-        spelersOverzicht overzicht = new spelersOverzicht();
-        //centreer het frame:
-        overzicht.setLocationRelativeTo(null);
-        overzicht.setVisible(true);
+        try {
+            Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            ResultSet result = stat.executeQuery("SELECT Tafel.spelerID as 'Speler ID', Tafel.rondeNummer as 'Ronde Nr.',\n"
+                    + "Tafel.tafelNummer as 'Tafel Nr.',Tafel.MaxAantalSpelers as 'Aantal Spelers',Tafel.tafelWinnaar as 'Winnaar Tafel',\n"
+                    + "FROM Tafel\n"
+                    + "  left outer join Ronde on Tafel.rondeNummer = Ronde.rondeNummer \n"
+                    + "  group by Tafel.rondeNummer");
+            // vraag aantal kolommen uit metadata tabel
+            ResultSetMetaData md = result.getMetaData();
+            int aantalKolommen = md.getColumnCount();
+            
+            // maak lege Array voor kolomnamen
+            String [] kolomnamen = new String [aantalKolommen];
+            
+            // maak een DefaultTableModel met de naam tabelmodel
+            DefaultTableModel tabelmodel = new DefaultTableModel() {
+                // maak typen in cel onmogelijk
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+                }
+            };
+            //vul Array kolomnamen
+            for (int j=0; j< aantalKolommen; j++){
+                    kolomnamen[j] = md.getColumnLabel(j+1);
+                }
+            //ken kolomnamen toe aan tabelmodel
+            tabelmodel.setColumnIdentifiers(kolomnamen);
+            while (result.next()) {
+                Object[] rijgegevens = new Object[aantalKolommen];
+                for (int i = 0; i < aantalKolommen; i++) {
+                rijgegevens[i] = result.getObject(i + 1);
+                }
+                tabelmodel.addRow(rijgegevens);
+            }
+            tafelIndelingToernooi.setModel(tabelmodel);
+        }   catch (SQLException e) {
+            System.out.println("SQL fout bij vullen lijst: " + e);
+        }
     }
 
     private void selecteerToernooi() {
