@@ -1,4 +1,4 @@
-// wijziging test danielle
+// wijziging test
 import javax.swing.JFrame;
 
 /*
