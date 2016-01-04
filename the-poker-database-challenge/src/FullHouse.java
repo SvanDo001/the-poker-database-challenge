@@ -406,8 +406,7 @@ public class FullHouse extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel2.setText("FullHouse");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Stefan\\Documents\\College\\Blok B\\Project B - Databases\\GitHub Repository\\the-poker-database-challenge\\the-poker-database-challenge\\bovpr_king.jpg")); // NOI18N
-        jLabel6.setText("jLabel6");
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Stefan\\Documents\\College\\Blok B\\Project B - Databases\\GitHub Repository\\the-poker-database-challenge\\the-poker-database-challenge\\src\\bovpr_king.jpg")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -615,9 +615,8 @@
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Stefan\Documents\College\Blok B\Project B - Databases\GitHub Repository\the-poker-database-challenge\the-poker-database-challenge\bovpr_king.jpg"/>
+          <Image iconType="2" name="C:\Users\Stefan\Documents\College\Blok B\Project B - Databases\GitHub Repository\the-poker-database-challenge\the-poker-database-challenge\src\bovpr_king.jpg"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="jLabel6"/>
       </Properties>
     </Component>
   </SubComponents>
