@@ -11,15 +11,9 @@
  */
 public class ModelItem {
 
-    public int id;
-    public String naam;
-    public String adres;
-    public String woonplaats;
+    public int spelerID;
+    public String winnaar = "J";
+    
 
-    @Override
-    public String toString() {
-              
-      return naam;
-    }
 
 }

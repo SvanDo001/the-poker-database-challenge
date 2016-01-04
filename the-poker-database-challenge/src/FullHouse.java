@@ -446,6 +446,7 @@ public class FullHouse extends javax.swing.JFrame {
 
     private void jtActieveDeelnemersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtActieveDeelnemersMouseClicked
         //winnaars selecteren = niet geselecteerde deelnemers als selectie vastleggen (dat zijn de knock outs die je wilt bijwerken)
+//        
     }//GEN-LAST:event_jtActieveDeelnemersMouseClicked
 
     private void jtGeplandeToernooien2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtGeplandeToernooien2MouseClicked
@@ -469,6 +470,7 @@ public class FullHouse extends javax.swing.JFrame {
     // rondenummer x van y, waarbij y berekend moet worden nav het aantal ingeschreven delenemer en max aantal aan tafel.
     // y-aantal records wordt aangemaakt databasetabel Ronde, met betreffende ToernooiID
     // een ronde bevat alle deelnemers betaaldJN = J en actiefInToernooi = J
+        selecteerWinnaars();
     }//GEN-LAST:event_btRegistreerKnockOutsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -782,17 +784,17 @@ public class FullHouse extends javax.swing.JFrame {
             //vul combobox cb SelecteerRonde
             while (result1.next()) {
                 rondeNR = result1.getInt(1);
-                 cbSelecteerRonde.addItem(rondeNR);
+                 cbSelecteerRonde.addItem(new Integer(rondeNR));
             }
             Statement stat2 = conn.createStatement();
-            ResultSet result2 = stat2.executeQuery("SELECT Tafel.rondeNummer, Speler.spelerID as 'Speler ID', Speler.naam as 'Speler',Tafel.tafelNummer\n"
-                    + "  FROM Deelname \n"
+            ResultSet result2 = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
+                    + "  FROM Deelname  \n"
                     + "  left outer join Tafel\n"
-                    + "  on Deelname.spelerID = Tafel.spelerID"
+                    + "  on Deelname.spelerID = Tafel.spelerID\n"
                     + " left outer join Speler\n"
                     + "  on Deelname.SpelerID = Speler.SpelerID\n"
                     + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J' AND actiefInToernooiJN like 'J'");
-            
+            // nog toevoegen order by Tafel.tafelNummer, ff uitzoeken waar precies
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result2.getMetaData();
             int aantalKolommen = md.getColumnCount();
@@ -829,9 +831,32 @@ public class FullHouse extends javax.swing.JFrame {
         
     }
 
+    private void selecteerWinnaars() {
+//NOG AANPASSEN< PAS TABEL VULLEN ALS RONDE NUMMER IS GESELECTEERD (zodra ander rondenummer wordt geselecteerd, moet de tabel ververst worden        
+
+//array winnaars krijgt waarde uit geselecteerde rijen - betreft de rij indexnummers
+        int[] winnaars = jtActieveDeelnemers.getSelectedRows();
+        ModelItem spelers = new ModelItem();
+        for (int i = 0; i < winnaars.length; i++) {
+        // ModelItem spelers wordt gevuld met spelersID en de code 0 voor winnaar
+        // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
+        spelers.spelerID = (int) jtActieveDeelnemers.getValueAt(winnaars[i], 1);
+ 
+            System.out.println("rij index:  "+ winnaars[i]);
+            System.out.println("spelerID in modelitem: " + spelers.spelerID);
+            System.out.println("winnaarJN in modelitem: " + spelers.winnaar);
+            
+        // ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n
+            
+            
+        }   
+        } 
+        
+    }       
+
     
     
     
     
     
-}
+
