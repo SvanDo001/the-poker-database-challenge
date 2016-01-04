@@ -42,10 +42,12 @@ public class spelersOverzicht extends javax.swing.JFrame {
                     kolomnamen[j] = md.getColumnLabel(j+1);
                     // check of er een kolom 'datum' is:
                     String kolom = kolomnamen[j];
-                    if ((kolom) == ("datum")){
-                    System.out.println("er is een kolom datum");
+                        System.out.println(kolom);
+                    if (kolom.equals ("Datum")){
+                        System.out.println("er is een kolom datum");
                     kolomdatum = "J";
                     }
+                        //System.out.println(kolomdatum);
                 }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
