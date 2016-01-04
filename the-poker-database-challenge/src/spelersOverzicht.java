@@ -42,12 +42,9 @@ public class spelersOverzicht extends javax.swing.JFrame {
                     kolomnamen[j] = md.getColumnLabel(j+1);
                     // check of er een kolom 'datum' is:
                     String kolom = kolomnamen[j];
-                        System.out.println(kolom);
                     if (kolom.equals ("Datum")){
-                        System.out.println("er is een kolom datum");
                     kolomdatum = "J";
                     }
-                        //System.out.println(kolomdatum);
                 }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
@@ -56,14 +53,14 @@ public class spelersOverzicht extends javax.swing.JFrame {
                 for (int i=0; i< aantalKolommen; i++){
                     rijgegevens[i]= result.getObject(i+1);
                     // als er kolom 'datum' is moet de datum worden omgezet naar NL format
-                    if (kolomdatum == "J") {
+                    if (kolomdatum.equals ("J")) {
                         //zet datum uit sql om naar weergave normale nl  
                         String datumsql = result.getString("datum");
                         try {
                             java.sql.Date sqlDate = FullHouse.dateStringToMySqlDate(datumsql);
                             String datum = FullHouse.mySqlDateToString(sqlDate);
                             //zet juiste datum terug in betreffende kolom: 2 bevat datum
-                            rijgegevens[2] = datum;
+                            rijgegevens[3] = datum;
                         } catch (Exception e) {
                             System.out.println(e);
                         }
