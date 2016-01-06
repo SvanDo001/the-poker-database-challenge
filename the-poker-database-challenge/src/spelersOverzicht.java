@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Danielle
  */
 public class spelersOverzicht extends javax.swing.JFrame {
-    private String kolomdatum;
+    private String kolomdatum = "N";
 
     /**
      * Creates new form spelersOverzicht
