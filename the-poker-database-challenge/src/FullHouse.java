@@ -838,7 +838,7 @@ public class FullHouse extends javax.swing.JFrame {
         }
     }
 
-        //TABBLAD 1
+    //TABBLAD 1
     private void overzichtPerToernooiNietBetaald() {
         try {
             int selectie = jtGeplandeToernooien.getSelectedRow();
