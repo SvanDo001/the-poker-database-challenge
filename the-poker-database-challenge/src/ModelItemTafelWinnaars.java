@@ -9,10 +9,11 @@
  *
  * @author gamijnar
  */
-public class ModelItem {
+public class ModelItemTafelWinnaars {
 
     public int spelerID;
     public String winnaar = "J";
+    public int toernooiID;
     
 
 

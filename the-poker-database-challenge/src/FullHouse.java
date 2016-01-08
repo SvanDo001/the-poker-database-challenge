@@ -22,6 +22,9 @@ public class FullHouse extends javax.swing.JFrame {
     public static int rondeNRTafelIndeling = 0;
     Object toernooiID;
     public static int aantalRondes;
+    int[] actieveDeelnemers;
+    //int[] actieveDeelnemers2;           
+    private int spelerID;
 
     /**
      * Creates new form FullHouse
@@ -1204,8 +1207,21 @@ public class FullHouse extends javax.swing.JFrame {
     //TABBLAD 4
     private void vulActieveDeelnemers() {
         try {
+   //         actieveDeelnemers2 = jtActieveDeelnemers.getSelectedRows();
             rondeNR = (Integer)cbSelecteerRonde.getSelectedItem();
             int selectie = jtGeplandeToernooien2.getSelectedRow();
+//            ModelItemTafelWinnaars winnaarsTafel = new ModelItemTafelWinnaars();
+//            for (int i = 0; i < actieveDeelnemers2.length; i++) {
+//        // ModelItem spelers wordt gevuld met spelersID en de code 0 voor winnaar
+//            // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
+//            winnaarsTafel.spelerID = (int) jtActieveDeelnemers.getValueAt(actieveDeelnemers2[i], 2);
+//
+//            System.out.println("rij index:  " + actieveDeelnemers2[i]);
+//            System.out.println("spelerID in modelitem: " + winnaarsTafel.spelerID);
+//            System.out.println("winnaarJN in modelitem: " + winnaarsTafel.winnaar);
+//
+//        // NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n
+//        }
             Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
@@ -1255,23 +1271,52 @@ public class FullHouse extends javax.swing.JFrame {
     
     //TABBLAD 4
     private void selecteerWinnaars() {
-//NOG AANPASSEN< PAS TABEL VULLEN ALS RONDE NUMMER IS GESELECTEERD (zodra ander rondenummer wordt geselecteerd, moet de tabel ververst worden        
-
+//NOG AANPASSEN< PAS TABEL VULLEN ALS RONDE NUMMER IS GESELECTEERD (zodra ander rondenummer wordt geselecteerd, moet de tabel ververst worden  
+        
+//UPDATE `pokerdatabase`.`Deelname` SET `mailOfTelefoon`='Telefoon' WHERE `spelerID`='4' and`toernooiID`='1';
+        
 //array winnaars krijgt waarde uit geselecteerde rijen - betreft de rij indexnummers
-        int[] winnaars = jtActieveDeelnemers.getSelectedRows();
-        ModelItem spelers = new ModelItem();
-        for (int i = 0; i < winnaars.length; i++) {
+        int selectie = jtGeplandeToernooien2.getSelectedRow();
+        actieveDeelnemers = jtActieveDeelnemers.getSelectedRows();
+        ModelItemTafelWinnaars winnaarsTafel = new ModelItemTafelWinnaars();
+        for (int i = 0; i < actieveDeelnemers.length; i++) {
         // ModelItem spelers wordt gevuld met spelersID en de code 0 voor winnaar
             // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
-            spelers.spelerID = (int) jtActieveDeelnemers.getValueAt(winnaars[i], 2);
+            winnaarsTafel.spelerID = (int) jtActieveDeelnemers.getValueAt(actieveDeelnemers[i], 2);
+            Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
+            winnaarsTafel.toernooiID = (int)toernooiID;
 
-            System.out.println("rij index:  " + winnaars[i]);
-            System.out.println("spelerID in modelitem: " + spelers.spelerID);
-            System.out.println("winnaarJN in modelitem: " + spelers.winnaar);
+            System.out.println("rij index:  " + actieveDeelnemers[i]);
+            System.out.println("spelerID in modelitem: " + winnaarsTafel.spelerID);
+            System.out.println("winnaarJN in modelitem: " + winnaarsTafel.winnaar);
+            System.out.println("betreft toernooi :" + winnaarsTafel.toernooiID);
 
-        // NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n
+         //NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n
         }
+        
+        
+        try{
+            Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            
+            for (int j = 0; j < actieveDeelnemers.length ;j++){
+                spelerID = winnaarsTafel.spelerID;
+                toernooiID = winnaarsTafel.toernooiID; 
+                //if (Deelname. spelerID != winnaarsTafel.spelerID { modelitem actieve deelnemers gebruiken
+                    
+                
+            stat.executeUpdate("UPDATE `pokerdatabase`.`Deelname` SET `actiefInToernooiJN`='N' WHERE `spelerID`= "+ spelerID + "and `toernooiID`=" + toernooiID);
+                //}
+            }
+        }catch (SQLException f) {
+            System.out.println("SQL fout bij vullen lijst: " + f);
+        
+        }
+        
+        System.out.println("actieve deelnemers: "+ actieveDeelnemers);
+        //System.out.println("tafelwinnaars: "+ actieveDeelnemers2);
     }
+    
     
      //VOOR ALLE TABBLADEN
     public static String mySqlDateToString(java.sql.Date date) {
