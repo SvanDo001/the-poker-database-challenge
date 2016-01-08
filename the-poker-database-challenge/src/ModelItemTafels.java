@@ -12,5 +12,4 @@ public class ModelItemTafels
 {
     public int SpelerID;
     public int tafelNummer;
-    public int maxAantalSpelers;
 }
