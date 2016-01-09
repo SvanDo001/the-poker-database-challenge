@@ -838,10 +838,7 @@ public class FullHouse extends javax.swing.JFrame {
                     + "locatieID as 'Locatie ID', COUNT(betaaldJN) as 'Ingeschreven', sum(Deelname.betaaldJN like 'J') as 'Reeds betaald'\n"
                     + "FROM Toernooi\n"
                     + "  left outer join Deelname on Toernooi.toernooiID = Deelname.toernooiID \n"
-<<<<<<< HEAD
-=======
                     + "  left outer join Speler on Toernooi.bekendeSpeler = Speler.spelerID"
->>>>>>> origin/master
                     + "  group by Toernooi.toernooiID");
             // vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
@@ -1362,15 +1359,13 @@ public class FullHouse extends javax.swing.JFrame {
             Statement stat = conn.createStatement();
             // elke actieve spelerID uit Deelname wordt vergeleken met spelers uit winnaarsTafel, komt ie niet voor dan is ie knock uit en word actiefInToernooiJN = J
             for (int j = 0; j < actieveDeelnemers.length ;j++){
-<<<<<<< HEAD
                 spelerID = winnaarsTafel.spelerID;
                 toernooiID = winnaarsTafel.toernooiID; 
                 //if (Deelname. spelerID != winnaarsTafel.spelerID { modelitem actieve deelnemers gebruiken
                     
                 
             stat.executeUpdate("UPDATE pokerdatabase`.`Deelname` SET `actiefInToernooiJN`='N' WHERE `spelerID`= "+ spelerID + "and `toernooiID`=" + toernooiID);
-                //}
-=======
+                //
                 for (int k = 0; k < aantalWinnaars; k++){
                     System.out.println(k);
                  spelerID = winnaarsTafel.spelerID;
@@ -1379,8 +1374,6 @@ public class FullHouse extends javax.swing.JFrame {
                  System.out.println("spelerID op N: " + spelerID);
                 }
             stat.executeUpdate("UPDATE pokerdatabase.Deelname SET actiefInToernooiJN='N' WHERE spelerID = '"  + spelerID  + "' and toernooiID = '" + toernooiID +"' ");
-
->>>>>>> origin/master
             }
         }catch (SQLException f) {
             System.out.println("SQL fout bij vullen lijst: " + f);
