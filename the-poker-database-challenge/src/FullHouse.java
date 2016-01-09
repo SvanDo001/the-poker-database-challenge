@@ -1,6 +1,9 @@
+
 import java.sql.*;
 import java.text.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -22,9 +25,11 @@ public class FullHouse extends javax.swing.JFrame {
     public static int rondeNRTafelIndeling = 0;
     Object toernooiID;
     public static int aantalRondes;
-    int[] actieveDeelnemers;
-    //int[] actieveDeelnemers2;           
+    ArrayList<String> lijstWinnaars = new ArrayList<>();
     private int spelerID;
+    ArrayList<String> actieveDeelnemers = new ArrayList<>();
+    private String speler;
+    ArrayList<String> knockouts = new ArrayList<>();
 
     /**
      * Creates new form FullHouse
@@ -669,7 +674,7 @@ public class FullHouse extends javax.swing.JFrame {
     }//GEN-LAST:event_jtActieveDeelnemersRondeMouseClicked
 
     private void jtActieveDeelnemersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtActieveDeelnemersMouseClicked
-       
+
     }//GEN-LAST:event_jtActieveDeelnemersMouseClicked
 
     private void jtGeplandeToernooien2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtGeplandeToernooien2MouseClicked
@@ -685,7 +690,7 @@ public class FullHouse extends javax.swing.JFrame {
         // bij het GESELECTEERDE toernooi in databasetabel Deelname.
         // In databasetabel Tafel moet de winnaars (de wel geselecteerde deelenemers) het rondenummer worden opgehoogd en een nieuw tafelnummer worden toegewezen
 
-    // overigens:
+        // overigens:
         // rondenummer x van y, waarbij y berekend moet worden nav het aantal ingeschreven delenemer en max aantal aan tafel.
         // y-aantal records wordt aangemaakt databasetabel Ronde, met betreffende ToernooiID
         // een ronde bevat alle deelnemers betaaldJN = J en actiefInToernooi = J
@@ -718,7 +723,7 @@ public class FullHouse extends javax.swing.JFrame {
 
     private void cbSelecteerRondeTafelsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsActionPerformed
     {//GEN-HEADEREND:event_cbSelecteerRondeTafelsActionPerformed
-        
+
     }//GEN-LAST:event_cbSelecteerRondeTafelsActionPerformed
 
     private void cbSelecteerRondeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbSelecteerRondeActionPerformed
@@ -747,7 +752,7 @@ public class FullHouse extends javax.swing.JFrame {
         selecteerToernooi2();
         haalRonde();
         //als toernooi nog geen rondes heeft, geen actieve deelnemers weergeven:
-        if (aantalRondes == 0){
+        if (aantalRondes == 0) {
             //voor de goede orde, leeg je tabel
             jtActieveDeelnemers.removeAll();
             //vul tabel met leeg model
@@ -759,12 +764,12 @@ public class FullHouse extends javax.swing.JFrame {
 
     private void jtGeplandeToernooienTafelIndelingMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtGeplandeToernooienTafelIndelingMousePressed
     {//GEN-HEADEREND:event_jtGeplandeToernooienTafelIndelingMousePressed
-                //ververs combobox: leegmaken
+        //ververs combobox: leegmaken
         cbSelecteerRondeTafels.removeAllItems();
         selecteerToernooiTafelIndeling();
         haalRondeTafelIndeling();
-         //als toernooi nog geen rondes heeft, geen actieve deelnemers weergeven:
-        if (aantalRondes == 0){
+        //als toernooi nog geen rondes heeft, geen actieve deelnemers weergeven:
+        if (aantalRondes == 0) {
             System.out.println("aantal rondes is leeg regel 615");
             //voor de goede orde, leeg je tabel
             jtActieveDeelnemersRonde.removeAll();
@@ -883,7 +888,7 @@ public class FullHouse extends javax.swing.JFrame {
             System.out.println("SQL fout bij vullen lijst: " + e);
         }
     }
-        
+
     //TABBLAD 1
     private void selecteerToernooi() {
         int selectie = jtGeplandeToernooien.getSelectedRow();
@@ -990,7 +995,7 @@ public class FullHouse extends javax.swing.JFrame {
         JOptionPane selecteerToernooi = new JOptionPane();
         selecteerToernooi.showMessageDialog(rootPane, "Selecteer een toernooi", "Selectie ontbreekt", 1);
     }
-    
+
     //TABBLAD 2
     private void spelersOverzichtAdres() {
         query = "SELECT spelerId as 'Speler ID', naam as 'Naam', straat as 'Straat en huisnr', postcode as 'Postcode', woonplaats as 'Plaats', emailadres as 'E-mail', telefoonnr as 'Tel.nr.' from Speler";
@@ -1014,7 +1019,7 @@ public class FullHouse extends javax.swing.JFrame {
         overzicht.setLocationRelativeTo(null);
         overzicht.setVisible(true);
     }
-    
+
     // TABBLAD 3
     private void selecteerToernooiTafelIndeling() {
         int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
@@ -1034,13 +1039,13 @@ public class FullHouse extends javax.swing.JFrame {
                     java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
                     String datum = mySqlDateToString(sqlDate);
                     String soort = result.getString("toernooiSoort");
-                    String jTF = "Toernooi nr " + Integer.toString(ID) + ": " + 
-                            soort + " op " + datum;
+                    String jTF = "Toernooi nr " + Integer.toString(ID) + ": "
+                            + soort + " op " + datum;
                     tfToernooiSelectieTafels.setText(jTF);
                 } catch (Exception e) {
                     /* je moet een try catch hebben anders klaagt de convert 
-                       method dateStringToMySqlDate 
-                    */
+                     method dateStringToMySqlDate 
+                     */
                     System.out.println(e);
                 }
             }
@@ -1048,7 +1053,7 @@ public class FullHouse extends javax.swing.JFrame {
             System.out.println("SQL fout bij vullen lijst: " + e);
         }
     }
-    
+
     //TABBLAD 3
     private void haalRondeTafelIndeling() {
         // vul combobox met rondenrs
@@ -1066,18 +1071,18 @@ public class FullHouse extends javax.swing.JFrame {
             while (result.next()) {
                 rondeNRTafelIndeling = result.getInt(1);
                 cbSelecteerRondeTafels.addItem(rondeNRTafelIndeling);
-                aantalRondes ++;
+                aantalRondes++;
             }
         } catch (SQLException e) {
             System.out.println("SQL fout bij vullen lijst: " + e);
         }
     }
-    
+
     //TABBLAD 3
     private void vulActieveDeelnemersTafels() {
-        
+
         try {
-            rondeNRTafelIndeling = (Integer)cbSelecteerRondeTafels.getSelectedItem();
+            rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
             Object toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
@@ -1124,27 +1129,23 @@ public class FullHouse extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
-    
-    // haal deelnemers op: toernooiID uit Ronde + spelerId uit Deelname
 
+    //TABBLAD 3
     private void berekenTafelIndelingSpelers() {
 //NOG AANPASSEN< PAS TABEL VULLEN ALS RONDE NUMMER IS GESELECTEERD (zodra ander rondenummer wordt geselecteerd, moet de tabel ververst worden        
 
         int[] tafel1 = jtActieveDeelnemersRonde.getSelectedRows();
         ModelItemTafels tafels = new ModelItemTafels();
         for (int i = 0; i < tafel1.length; i++) {
-        // ModelItem tafels wordt gevuld met spelersID en de code 0 voor winnaar
+            // ModelItem tafels wordt gevuld met spelersID en de code 0 voor winnaar
             // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
             tafels.SpelerID = (int) jtActieveDeelnemersRonde.getValueAt(tafel1[i], 2);
-            tafels.tafelNummer = (int) jtActieveDeelnemersRonde.getValueAt( tafel1[i], 0);
+            tafels.tafelNummer = (int) jtActieveDeelnemersRonde.getValueAt(tafel1[i], 0);
 
-            System.out.println("rij index:  " + tafel1[i]);
-            System.out.println("spelerID in modelitem: " + tafels.SpelerID);
-            System.out.println("Tafelnr in modelitem: " + tafels.tafelNummer);
-            
-            System.out.println(Arrays.toString(tafel1));
+            System.out.println("1142 rij index:  " + tafel1[i]);
+            System.out.println("1143 spelerID in modelitem: " + tafels.SpelerID);
+            System.out.println("1144 Tafelnr in modelitem: " + tafels.tafelNummer);
 
-        // NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n       
         }
     }
 
@@ -1194,37 +1195,41 @@ public class FullHouse extends javax.swing.JFrame {
             while (result1.next()) {
                 rondeNR = result1.getInt(1);
                 cbSelecteerRonde.addItem(rondeNR);
-                aantalRondes ++;
+                aantalRondes++;
             }
         } catch (SQLException e) {
             System.out.println("SQL fout bij vullen lijst: " + e);
         }
-        
-            
+
     }
 
-        // haal deelnemers op: toernooiID uit Ronde + spelerId uit Deelname
-    
     //TABBLAD 4
     private void vulActieveDeelnemers() {
+        // ik snap niet waarom, maar while result.next vult 3 x de array actieveDeelnemers, terwijl de query in mysql workbench maar 1 set ophaalt.door deze te legen, vult ie alles maar 1 keer
+        // geen fraaie oplossing, maar geen tijd om het uit te zoeken
+        actieveDeelnemers.clear();
+        System.out.println("lijst actieveDeelnemers geleegd");
         try {
-   //         actieveDeelnemers2 = jtActieveDeelnemers.getSelectedRows();
-            rondeNR = (Integer)cbSelecteerRonde.getSelectedItem();
+            //         actieveDeelnemers2 = jtActieveDeelnemers.getSelectedRows();
+            rondeNR = (Integer) cbSelecteerRonde.getSelectedItem();
             int selectie = jtGeplandeToernooien2.getSelectedRow();
-//            ModelItemTafelWinnaars winnaarsTafel = new ModelItemTafelWinnaars();
-//            for (int i = 0; i < actieveDeelnemers2.length; i++) {
-//        // ModelItem spelers wordt gevuld met spelersID en de code 0 voor winnaar
-//            // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
-//            winnaarsTafel.spelerID = (int) jtActieveDeelnemers.getValueAt(actieveDeelnemers2[i], 2);
-//
-//            System.out.println("rij index:  " + actieveDeelnemers2[i]);
-//            System.out.println("spelerID in modelitem: " + winnaarsTafel.spelerID);
-//            System.out.println("winnaarJN in modelitem: " + winnaarsTafel.winnaar);
-//
-//        // NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n
-//        }
-            Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
+            toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
+            //eerst arraylist actieveDeelnemers vullen
             Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            ResultSet result = stat.executeQuery("SELECT Deelname.spelerID\n"
+                    + "  FROM Deelname  \n"
+                    + "  left outer join Speler\n"
+                    + "  on Deelname.SpelerID = Speler.SpelerID\n"
+                    + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J'\n"
+                    + "  AND actiefInToernooiJN like 'J'");
+            while (result.next()) {
+                String actief = (String) result.getObject(1).toString();
+                actieveDeelnemers.add(actief);
+                System.out.println("toegevoegd aan actief: " + actief + " in toernooi " + toernooiID);
+            }
+
+            //vullen tabel jtActieveDeelnemers
             Statement stat2 = conn.createStatement();
             ResultSet result2 = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
                     + "  FROM Deelname  \n"
@@ -1238,7 +1243,7 @@ public class FullHouse extends javax.swing.JFrame {
             ResultSetMetaData md = result2.getMetaData();
             int aantalKolommen = md.getColumnCount();
             // maak lege Array voor kolomnamen
-            String[] kolomnamen = new String[aantalKolommen];
+            kolomnamen = new String[aantalKolommen];
             // maak een DefaultTableModel met de naam tabelmodel
             DefaultTableModel tabelmodel = new DefaultTableModel() {
                 // maak typen in cel onmogelijk
@@ -1252,9 +1257,10 @@ public class FullHouse extends javax.swing.JFrame {
             }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
-            //vul jtActieveDeelnemers
+            //vul jtActieveDeelnemers en vul tegelijk een arraylist
             while (result2.next()) {
-                Object[] rijgegevens = new Object[aantalKolommen];
+                // aantalKolommen staat voor aantal items in elke 'rij van het object'
+                Object rijgegevens[] = new Object[aantalKolommen];
                 for (int i = 0; i < aantalKolommen; i++) {
                     rijgegevens[i] = result2.getObject(i + 1);
                 }
@@ -1267,56 +1273,54 @@ public class FullHouse extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             System.out.println(e);;
         }
-        
+
     }
-    
+
     //TABBLAD 4
     private void selecteerWinnaars() {
-       
-//UPDATE `pokerdatabase`.`Deelname` SET `mailOfTelefoon`='Telefoon' WHERE `spelerID`='4' and`toernooiID`='1';
-        int aantalWinnaars = 0;
+        // selectie = geselecteerd toernooi
         int selectie = jtGeplandeToernooien2.getSelectedRow();
-        actieveDeelnemers = jtActieveDeelnemers.getSelectedRows();
-        ModelItemTafelWinnaars winnaarsTafel = new ModelItemTafelWinnaars();
-        for (int i = 0; i < actieveDeelnemers.length; i++) {
-        // ModelItem spelers wordt gevuld met spelersID en de code 0 voor winnaar
-            // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
-            winnaarsTafel.spelerID = (int)jtActieveDeelnemers.getValueAt(actieveDeelnemers[i], 2);
-            Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
-            winnaarsTafel.toernooiID = (int)toernooiID;
-
-            System.out.println("rij index:  " + actieveDeelnemers[i]);
-            System.out.println("spelerID in modelitem: " + winnaarsTafel.spelerID);
-            System.out.println("winnaarJN in modelitem: " + winnaarsTafel.winnaar);
-            System.out.println("betreft toernooi :" + winnaarsTafel.toernooiID);
-            
-            aantalWinnaars ++;
-
-         //NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n
+        Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
+        //geselecteerdWinnaars bevat geselecteerde rij indexen winnaars
+        int[] geselecteerdeWinnaars = jtActieveDeelnemers.getSelectedRows();
+        // voeg winnaars toe aan array list
+        for (int i = 0; i < geselecteerdeWinnaars.length; i++) {
+            String winnaar = (String) jtActieveDeelnemers.getValueAt(geselecteerdeWinnaars[i], 2).toString();
+            lijstWinnaars.add(winnaar);
         }
-        try{
+        try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            // elke actieve spelerID uit Deelname wordt vergeleken met spelers uit winnaarsTafel, komt ie niet voor dan is ie knock uit en word actiefInToernooiJN = J
-            for (int j = 0; j < actieveDeelnemers.length ;j++){
-                for (int k = 0; k < aantalWinnaars; k++){
-                    System.out.println(k);
-                 spelerID = winnaarsTafel.spelerID;
-                 toernooiID = winnaarsTafel.toernooiID;
-                 System.out.println("toernooiID: " + toernooiID);   
-                 System.out.println("spelerID op N: " + spelerID);
-                }
-            stat.executeUpdate("UPDATE pokerdatabase.Deelname SET actiefInToernooiJN='N' WHERE spelerID = '"  + spelerID  + "' and toernooiID = '" + toernooiID +"' ");
-
+            for (int i = 0 ; i < lijstWinnaars.size(); i++) 
+           for (int j = 0; j < actieveDeelnemers.size(); j++) { 
+               speler = actieveDeelnemers.get(j);
+               System.out.println("speler: " + speler);
+               System.out.println("winnaar: " + lijstWinnaars.get(i));
+               // als de speler voorkomt in de winnaarslijst, niets doen, verwijderen uit lijst actieveDeelnemers om te voorkomen dat ie met andere winnaars wordt vergeleken
+               if ( lijstWinnaars.contains(speler)){
+                  actieveDeelnemers.remove(speler);
+                   System.out.println("speler :"+ speler + "is een winnaar en wordt niet meer vergeleken met andere winnaars");
+               }
+               // als winnnaar niet gelijk is aan de speler, zet speler op knock out lijst    
+               else{
+                   knockouts.add(speler);
+                   System.out.println("          toernooi " + toernooiID + " : speler " + speler + " is knock out ");
+               }
+           }
+           // zet actiefInToernooiJN op N voor alle spelers uit de knockouts lijst
+            for (int k = 0 ; k < knockouts.size(); k++){
+            speler = knockouts.get(k);
+                stat.executeUpdate("UPDATE pokerdatabase.Deelname SET actiefInToernooiJN='N' WHERE spelerID = '" + speler + "' and toernooiID = '" + toernooiID + "' ");
             }
-        }catch (SQLException f) {
+        } catch (SQLException f) {
             System.out.println("SQL fout bij vullen lijst: " + f);
-        
+
+        } catch (NullPointerException e) {
+            System.out.println(e);
         }
     }
-    
-    
-     //VOOR ALLE TABBLADEN
+
+    //VOOR ALLE TABBLADEN
     public static String mySqlDateToString(java.sql.Date date) {
         /* ik schrijf de datum als dd-mm-yyyy */
         DateFormat df = new SimpleDateFormat("dd-mm-yyyy");
@@ -1329,6 +1333,5 @@ public class FullHouse extends javax.swing.JFrame {
         java.util.Date parsed = format.parse(date);
         return new java.sql.Date(parsed.getTime());
     }
-    
-       
+
 }
