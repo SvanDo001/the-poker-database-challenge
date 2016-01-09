@@ -22,7 +22,7 @@ public class FullHouse extends javax.swing.JFrame {
     public static int rondeNRTafelIndeling = 0;
     Object toernooiID;
     public static int aantalRondes;
-    int[] actieveDeelnemers;
+        int[] actieveDeelnemers;
     //int[] actieveDeelnemers2;           
     private int spelerID;
 
@@ -837,7 +837,7 @@ public class FullHouse extends javax.swing.JFrame {
                     + "minimaleRatingMasterClass as 'Rating Masterclass',Toernooi.spelerId as 'Master voor Masterclass',\n"
                     + "locatieID as 'Locatie ID', COUNT(betaaldJN) as 'Ingeschreven', sum(Deelname.betaaldJN like 'J') as 'Reeds betaald'\n"
                     + "FROM Toernooi\n"
-                    + "  left outer join Deelname on Toernooi.toernooiID = Deelname.spelerID \n"
+                    + "  left outer join Deelname on Toernooi.toernooiID = Deelname.toernooiID \n"
                     + "  group by Toernooi.toernooiID");
             // vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
@@ -1126,12 +1126,71 @@ public class FullHouse extends javax.swing.JFrame {
     
     // haal deelnemers op: toernooiID uit Ronde + spelerId uit Deelname
 
-    private void berekenTafelIndelingSpelers() {
-//NOG AANPASSEN< PAS TABEL VULLEN ALS RONDE NUMMER IS GESELECTEERD (zodra ander rondenummer wordt geselecteerd, moet de tabel ververst worden        
+        private void berekenTafelIndelingSpelers() {
+        try {
+            Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            ResultSet result = stat.executeQuery("SELECT Toernooi.toernooiID as 'Toernooi ID',toernooiSoort as 'Soort toernooi',\n + "
+                    + "Toernooi.datum as 'Datum',hoogteInlegGeld as 'Inleggeld',maxAantalSpelers as 'Aantal Spelers',\n"
+                    + "minimaleRatingMasterClass as 'Rating Masterclass',Toernooi.spelerId as 'Master voor Masterclass',\n"
+                    + "locatieID as 'Locatie ID', COUNT(betaaldJN) as 'Ingeschreven', sum(Deelname.betaaldJN like 'J') as 'Reeds betaald'\n"
+                    + "FROM Toernooi\n"
+                    + "  left outer join Deelname on Toernooi.toernooiID = Deelname.toernooiID \n"
+                    + "  group by Toernooi.toernooiID");
+            // vraag aantal kolommen uit metadata tabel
+            ResultSetMetaData md = result.getMetaData();
+            int aantalKolommen = md.getColumnCount();
+            // maak lege Array voor kolomnamen
+            String[] kolomnamen = new String[aantalKolommen];
+            // maak een DefaultTableModel met de naam tabelmodel
+            DefaultTableModel tabelmodel = new DefaultTableModel() {
+                // maak typen in cel onmogelijk
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                }
+            };
+            //vul Array kolomnamen
+            for (int j = 0; j < aantalKolommen; j++) {
+                kolomnamen[j] = md.getColumnLabel(j + 1);
+            }
+            //ken kolomnamen toe aan tabelmodel
+            tabelmodel.setColumnIdentifiers(kolomnamen);
+            while (result.next()) {
+                Object[] rijgegevens = new Object[aantalKolommen];
+                for (int i = 0; i < aantalKolommen; i++) {
+                    rijgegevens[i] = result.getObject(i + 1);
+                    //zet datum uit sql om naar weergave normale nl datum 
+                    String datumsql = result.getString("datum");
 
+                    try {
+                        java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
+                        String datum = mySqlDateToString(sqlDate);
+                        //zet juiste datum terug in betreffende kolom: 2 bevat datum
+                        rijgegevens[2] = datum;
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+                tabelmodel.addRow(rijgegevens);
+            }
+            jtGeplandeToernooien.setModel(tabelmodel);
+            jtGeplandeToernooien2.setModel(tabelmodel);
+            jtGeplandeToernooienTafelIndeling.setModel(tabelmodel);
+        } catch (SQLException e) {
+            System.out.println("SQL fout bij vullen lijst: " + e);
+        }
+    }
+    
+    private void vulTafelIndelingSpelers() {
+//NOG AANPASSEN< PAS TABEL VULLEN ALS RONDE NUMMER IS GESELECTEERD (zodra ander rondenummer wordt geselecteerd, moet de tabel ververst worden        
+  //int deelnemersToernooi = jtActieveDeelnemersRonde.getRowCount() / 
+
+// aantaldeelnemers = actievedeelnemers / maxtafelbezetting % + 1;
+        // 
+        
         int[] tafel1 = jtActieveDeelnemersRonde.getSelectedRows();
         ModelItemTafels tafels = new ModelItemTafels();
-        for (int i = 0; i < tafel1.length; i++) {
+        for (int i = 0; i < tafel1.length; i++) {   
         // ModelItem tafels wordt gevuld met spelersID en de code 0 voor winnaar
             // aan de hand van het rij indexnummer wordt de spelerID uit de 2e kolom (=kolomnr 1) opgehaald
             tafels.SpelerID = (int) jtActieveDeelnemersRonde.getValueAt(tafel1[i], 2);
@@ -1145,6 +1204,7 @@ public class FullHouse extends javax.swing.JFrame {
 
         // NOG SCHRIJVEN: ga alle spelers in deelname met status actief in toernooi = j langs en als id ongelijk aan id aan modelitem zet actief op n       
         }
+        
     }
 
     //TABBLAD 4
@@ -1305,7 +1365,7 @@ public class FullHouse extends javax.swing.JFrame {
                 //if (Deelname. spelerID != winnaarsTafel.spelerID { modelitem actieve deelnemers gebruiken
                     
                 
-            stat.executeUpdate("UPDATE `pokerdatabase`.`Deelname` SET `actiefInToernooiJN`='N' WHERE `spelerID`= "+ spelerID + "and `toernooiID`=" + toernooiID);
+            stat.executeUpdate("UPDATE pokerdatabase`.`Deelname` SET `actiefInToernooiJN`='N' WHERE `spelerID`= "+ spelerID + "and `toernooiID`=" + toernooiID);
                 //}
             }
         }catch (SQLException f) {
