@@ -23,14 +23,12 @@ public class FullHouse extends javax.swing.JFrame {
     public static String labeltekst;
     public static int rondeNR = 0;
     public static int rondeNRTafelIndeling = 0;
-    Object toernooiID;
     public static int aantalRondes;
-
-    ArrayList<String> lijstWinnaars = new ArrayList<>();
-
     private int spelerID;
-    ArrayList<String> actieveDeelnemers = new ArrayList<>();
     private String speler;
+    Object toernooiID;
+    ArrayList<String> lijstWinnaars = new ArrayList<>();
+    ArrayList<String> actieveDeelnemers = new ArrayList<>();
     ArrayList<String> knockouts = new ArrayList<>();
 
     /**
@@ -760,6 +758,7 @@ public class FullHouse extends javax.swing.JFrame {
             //vul tabel met leeg model
             DefaultTableModel leegmodel = new DefaultTableModel();
             jtActieveDeelnemers.setModel(leegmodel);
+            // ververs weergave
             jtActieveDeelnemers.repaint();
         }
     }//GEN-LAST:event_jtGeplandeToernooien2MousePressed
@@ -1372,7 +1371,7 @@ public class FullHouse extends javax.swing.JFrame {
                // als winnnaar niet gelijk is aan de speler, zet speler op knock out lijst    
                else{
                    knockouts.add(speler);
-                   System.out.println("          toernooi " + toernooiID + " : speler " + speler + " is knock out ");
+                   System.out.println("          toernooi " + toernooiID + " ronde " + rondeNR +" : speler " + speler + " is knock out ");
                }
            }
            // zet actiefInToernooiJN op N voor alle spelers uit de knockouts lijst
@@ -1387,7 +1386,25 @@ public class FullHouse extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             System.out.println(e);
         }
+        ophogenRondeInToernooi();
     }
+    
+    
+    private void ophogenRondeInToernooi() {
+        //maakt volgende ronde binnen toernooi aan in database tabel Ronde
+        rondeNR++;
+        try {
+            Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            stat.executeUpdate("INSERT INTO pokerdatabase.Ronde (rondeNummer, toernooiID) VALUES (" + rondeNR + "," + toernooiID + ")");
+
+            
+        } catch (SQLException f) {
+            System.out.println("SQL fout bij vullen lijst: " + f);
+        }
+    }
+
+
 
     //VOOR ALLE TABBLADEN
     public static String mySqlDateToString(java.sql.Date date) {
@@ -1402,5 +1419,4 @@ public class FullHouse extends javax.swing.JFrame {
         java.util.Date parsed = format.parse(date);
         return new java.sql.Date(parsed.getTime());
     }
-
-}
+}    
