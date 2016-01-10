@@ -1092,7 +1092,7 @@ public class FullHouse extends javax.swing.JFrame {
                     + " left outer join Speler\n"
                     + "  on Deelname.SpelerID = Speler.SpelerID\n"
                     + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J'\n"
-                    + " AND actiefInToernooiJN like 'J' AND Tafel.rondeNummer = " + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
+                    + " AND actiefInToernooiJN like 'J' AND Tafel.rondeNummer = " + rondeNRTafelIndeling + " order by Tafel.tafelnummer");          
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
@@ -1131,9 +1131,10 @@ public class FullHouse extends javax.swing.JFrame {
     //TABBLAD 3
     private void berekenTafelIndelingSpelers() {
         try {
+            rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
-            ResultSet result = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
+            ResultSet result = stat2.executeQuery("SELECT count(Deelname.spelerID)\n"
                     + "  FROM Deelname  \n"
                     + "  left outer join Tafel\n"
                     + "  on Deelname.spelerID = Tafel.spelerID\n"
@@ -1141,51 +1142,39 @@ public class FullHouse extends javax.swing.JFrame {
                     + "  on Deelname.SpelerID = Speler.SpelerID\n"
                     + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J'\n"
                     + " AND actiefInToernooiJN like 'J' AND Tafel.rondeNummer = " + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
-            //vraag aantal kolommen uit metadata tabel
-            ResultSetMetaData md = result.getMetaData();
-            int aantalKolommen = md.getColumnCount();
-            // maak lege Array voor kolomnamen
-            String[] kolomnamen = new String[aantalKolommen];
-            // maak een DefaultTableModel met de naam tabelmodel
-            DefaultTableModel tabelmodel = new DefaultTableModel() {
-                // maak typen in cel onmogelijk
-                public boolean isCellEditable(int rowIndex, int mColIndex) {
-                    return false;
-                }
-            };
-            //vul Array kolomnamen
-            for (int j = 0; j < aantalKolommen; j++) {
-                kolomnamen[j] = md.getColumnLabel(j + 1);
-            }
-            //ken kolomnamen toe aan tabelmodel
-            tabelmodel.setColumnIdentifiers(kolomnamen);
-            //vul jtActieveDeelnemersRonde
             while (result.next()) {
-                Object[] rijgegevens = new Object[aantalKolommen];
-                for (int i = 0; i < aantalKolommen; i++) {
-                    rijgegevens[i] = result.getObject(i + 1);
-                }
-                tabelmodel.addRow(rijgegevens);
+            // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
+            int aantalActieveSpelersRonde = result.getInt(1);
+                System.out.println(aantalActieveSpelersRonde);
             }
-            jtActieveDeelnemersRonde.setModel(tabelmodel);
-            // vraag aantal kolommen uit metadata tabel
+            
+            rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
+            ResultSet result2 = stat2.executeQuery("SELECT Tafel.ToernooiID, TafelCapaciteit.tafelNummer, TafelCapaciteit.maxAantalSpelers, Tafel.rondeNummer\n"
+                    + "FROM TafelCapaciteit  \n"
+                    + "inner join Tafel\n"
+                    + "on TafelCapaciteit.tafelNummer = Tafel.tafelNummer\n"
+                    + "where Tafel.ToernooiID = '" + toernooiID + "' AND Tafel.rondeNummer = \n"
+                    + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
+            while (result2.next()) {
+            // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
+            int maxAantalSpelersTafel = result2.getInt(3);
+                System.out.println(maxAantalSpelersTafel);
+            }
+            // TOE TE VOEGEN AAN DEZE TRY
+            /*
+            if (maxAantalSpelersTafel = 2; maxAantalSpelersTafel < aantalSpelersTafelSpelSoort; y++){
+                if(( x % y) == (0)) {
+                }
+            }
+            else{
+            y++;
+            }
+            */
         } catch (SQLException f) {
             System.out.println("SQL fout bij vullen lijst: " + f);
         } catch (NullPointerException e) {
             System.out.println(e);
         }
-        /*
-        int x = aantal deelnemers (betaald)
-        int y = aantal spelers aan tafel -> startwaarde y = 2 (zie opmerking onderaan)
-
-        if (int y = 2 ; y < aantalSpelersTafelSpelSoort; y++){
-            if(( x % y) == (0)) {
-            }
-        }
-        else{
-        y++;
-        }
-        */
     }
     
     private void vulTafelIndelingSpelers() {
