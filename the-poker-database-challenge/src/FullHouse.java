@@ -1,9 +1,7 @@
 
 import java.sql.*;
 import java.text.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -771,7 +769,6 @@ public class FullHouse extends javax.swing.JFrame {
         haalRondeTafelIndeling();
         //als toernooi nog geen rondes heeft, geen actieve deelnemers weergeven:
         if (aantalRondes == 0) {
-            System.out.println("aantal rondes is leeg regel 615");
             //voor de goede orde, leeg je tabel
             jtActieveDeelnemersRonde.removeAll();
             //vul tabel met leeg model
@@ -1085,7 +1082,7 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
-            Object toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
+            toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
             ResultSet result = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
@@ -1134,18 +1131,20 @@ public class FullHouse extends javax.swing.JFrame {
 
     //TABBLAD 3
     private void berekenTafelIndelingSpelers() {
-
         try {
+            int selectie = ;
+            Object toernooiID = jtActieveDeelnemersRonde.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
-            Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT Toernooi.toernooiID as 'Toernooi ID',toernooiSoort as 'Soort toernooi',\n + "
-                    + "Toernooi.datum as 'Datum',hoogteInlegGeld as 'Inleggeld',maxAantalSpelers as 'Aantal Spelers',\n"
-                    + "minimaleRatingMasterClass as 'Rating Masterclass',Toernooi.spelerId as 'Master voor Masterclass',\n"
-                    + "locatieID as 'Locatie ID', COUNT(betaaldJN) as 'Ingeschreven', sum(Deelname.betaaldJN like 'J') as 'Reeds betaald'\n"
-                    + "FROM Toernooi\n"
-                    + "  left outer join Deelname on Toernooi.toernooiID = Deelname.toernooiID \n"
-                    + "  group by Toernooi.toernooiID");
-            // vraag aantal kolommen uit metadata tabel
+            Statement stat2 = conn.createStatement();
+            ResultSet result = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
+                    + "  FROM Deelname  \n"
+                    + "  left outer join Tafel\n"
+                    + "  on Deelname.spelerID = Tafel.spelerID\n"
+                    + " left outer join Speler\n"
+                    + "  on Deelname.SpelerID = Speler.SpelerID\n"
+                    + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J'\n"
+                    + " AND actiefInToernooiJN like 'J' AND Tafel.rondeNummer = " + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
+            //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
             // maak lege Array voor kolomnamen
@@ -1163,30 +1162,33 @@ public class FullHouse extends javax.swing.JFrame {
             }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
+            //vul jtActieveDeelnemersRonde
             while (result.next()) {
                 Object[] rijgegevens = new Object[aantalKolommen];
                 for (int i = 0; i < aantalKolommen; i++) {
                     rijgegevens[i] = result.getObject(i + 1);
-                    //zet datum uit sql om naar weergave normale nl datum 
-                    String datumsql = result.getString("datum");
-
-                    try {
-                        java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
-                        String datum = mySqlDateToString(sqlDate);
-                        //zet juiste datum terug in betreffende kolom: 2 bevat datum
-                        rijgegevens[2] = datum;
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
                 }
                 tabelmodel.addRow(rijgegevens);
             }
-            jtGeplandeToernooien.setModel(tabelmodel);
-            jtGeplandeToernooien2.setModel(tabelmodel);
-            jtGeplandeToernooienTafelIndeling.setModel(tabelmodel);
-        } catch (SQLException e) {
-            System.out.println("SQL fout bij vullen lijst: " + e);
+            jtActieveDeelnemersRonde.setModel(tabelmodel);
+            // vraag aantal kolommen uit metadata tabel
+        } catch (SQLException f) {
+            System.out.println("SQL fout bij vullen lijst: " + f);
+        } catch (NullPointerException e) {
+            System.out.println(e);
         }
+        /*
+        int x = aantal deelnemers (betaald)
+        int y = aantal spelers aan tafel -> startwaarde y = 2 (zie opmerking onderaan)
+
+        if (int y = 2 ; y < aantalSpelersTafelSpelSoort; y++){
+            if(( x % y) == (0)) {
+            }
+        }
+        else{
+        y++;
+        }
+        */
     }
     
     private void vulTafelIndelingSpelers() {
