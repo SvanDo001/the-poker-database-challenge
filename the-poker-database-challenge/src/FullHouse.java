@@ -1128,12 +1128,9 @@ public class FullHouse extends javax.swing.JFrame {
         }
     }
 
-
     //TABBLAD 3
     private void berekenTafelIndelingSpelers() {
         try {
-            int selectie = ;
-            Object toernooiID = jtActieveDeelnemersRonde.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
             ResultSet result = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
