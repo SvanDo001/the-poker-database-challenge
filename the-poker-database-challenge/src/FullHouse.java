@@ -100,6 +100,8 @@ public class FullHouse extends javax.swing.JFrame {
         jScrollPane8 = new javax.swing.JScrollPane();
         jtInschrijvingen = new javax.swing.JTable();
         lbActieveDeelnemersRonde1 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jtInschrijvingen1 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -618,10 +620,29 @@ public class FullHouse extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtInschrijvingenMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtInschrijvingenMousePressed(evt);
+            }
         });
         jScrollPane8.setViewportView(jtInschrijvingen);
 
-        lbActieveDeelnemersRonde1.setText("Wijzig deelnemer of vul nieuwe regel in:");
+        lbActieveDeelnemersRonde1.setText("Selecteer Speler");
+
+        jtInschrijvingen1.setAutoCreateRowSorter(true);
+        jtInschrijvingen1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtInschrijvingen1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtInschrijvingen1MouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(jtInschrijvingen1);
 
         javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
         jLayeredPane4.setLayout(jLayeredPane4Layout);
@@ -637,6 +658,7 @@ public class FullHouse extends javax.swing.JFrame {
                             .addComponent(lbActieveDeelnemersRonde1))
                         .addGap(38, 38, 38)
                         .addComponent(tfToernooiSelectieInschrijvingen, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -653,9 +675,11 @@ public class FullHouse extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addComponent(lbActieveDeelnemersRonde1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jLayeredPane4.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -663,6 +687,7 @@ public class FullHouse extends javax.swing.JFrame {
         jLayeredPane4.setLayer(lbSelecteerToernooi1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(jScrollPane8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane4.setLayer(lbActieveDeelnemersRonde1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jScrollPane9, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jTabbedPane1.addTab("Deelnameregistratie", jLayeredPane4);
 
@@ -874,9 +899,17 @@ public class FullHouse extends javax.swing.JFrame {
 
     private void jtDeelnameRegistratieMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDeelnameRegistratieMousePressed
         selecteerToernooi3();
-        bijwerkenDeelname();
+        vulDeelname();
 
     }//GEN-LAST:event_jtDeelnameRegistratieMousePressed
+
+    private void jtInschrijvingen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtInschrijvingen1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtInschrijvingen1MouseClicked
+
+    private void jtInschrijvingenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtInschrijvingenMousePressed
+    //kopieerDeelnemer();
+    }//GEN-LAST:event_jtInschrijvingenMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBerekenTafelIndeling;
@@ -910,6 +943,7 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jtActieveDeelnemers;
     private javax.swing.JTable jtActieveDeelnemersRonde;
@@ -918,6 +952,7 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JTable jtGeplandeToernooien2;
     private javax.swing.JTable jtGeplandeToernooienTafelIndeling;
     private javax.swing.JTable jtInschrijvingen;
+    private javax.swing.JTable jtInschrijvingen1;
     private javax.swing.JTable jtTafelIndelingToernooi;
     private javax.swing.JLabel lbActieveDeelnemersRonde;
     private javax.swing.JLabel lbActieveDeelnemersRonde1;
@@ -941,7 +976,7 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT Toernooi.toernooiID as 'Toernooi ID',toernooiSoort as 'Soort toernooi',\n + "
+            ResultSet result = stat.executeQuery("SELECT Toernooi.toernooiID as 'Toernooi ID',spelNaam as 'Soort toernooi',\n + "
                     + "Toernooi.datum as 'Datum',hoogteInlegGeld as 'Inleggeld',maxAantalDeelnemers as 'Aantal Deelnemers',\n"
                     + "minimaleRatingMasterClass as 'Rating Masterclass',Speler.naam as 'Master voor Masterclass',\n"
                     + "locatieID as 'Locatie ID', COUNT(betaaldJN) as 'Ingeschreven', sum(Deelname.betaaldJN like 'J') as 'Reeds betaald'\n"
@@ -1002,7 +1037,7 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT toernooiID, toernooiSoort, Toernooi.datum from Toernooi where toernooiID = '" + toernooiID + "'");
+            ResultSet result = stat.executeQuery("SELECT toernooiID, spelNaam, Toernooi.datum from Toernooi where toernooiID = '" + toernooiID + "'");
             while (result.next()) {
                 int ID = result.getInt("toernooiID");
                 //zet datum uit sql om naar weergave normale nl datum
@@ -1010,7 +1045,7 @@ public class FullHouse extends javax.swing.JFrame {
                 try {
                     java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
                     String datum = mySqlDateToString(sqlDate);
-                    String soort = result.getString("toernooiSoort");
+                    String soort = result.getString("spelNaam");
                     String jTF = "Toernooi nr " + Integer.toString(ID) + ": " + soort + " op " + datum;
                     tfToernooiSelectie.setText(jTF);
                 } catch (Exception e) {
@@ -1134,7 +1169,7 @@ public class FullHouse extends javax.swing.JFrame {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
             ResultSet result = stat.executeQuery("SELECT toernooiID, "
-                    + "toernooiSoort, Toernooi.datum from Toernooi where "
+                    + "spelNaam, Toernooi.datum from Toernooi where "
                     + "toernooiID = '" + toernooiID + "'");
             while (result.next()) {
                 int ID = result.getInt("toernooiID");
@@ -1143,7 +1178,7 @@ public class FullHouse extends javax.swing.JFrame {
                 try {
                     java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
                     String datum = mySqlDateToString(sqlDate);
-                    String soort = result.getString("toernooiSoort");
+                    String soort = result.getString("spelNaam");
                     String jTF = "Toernooi nr " + Integer.toString(ID) + ": "
                             + soort + " op " + datum;
                     tfToernooiSelectieTafels.setText(jTF);
@@ -1316,7 +1351,7 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT toernooiID, toernooiSoort, Toernooi.datum from Toernooi where toernooiID = '" + toernooiID + "'");
+            ResultSet result = stat.executeQuery("SELECT toernooiID, spelNaam, Toernooi.datum from Toernooi where toernooiID = '" + toernooiID + "'");
             while (result.next()) {
                 int ID = result.getInt("toernooiID");
                 //zet datum uit sql om naar weergave normale nl datum
@@ -1324,7 +1359,7 @@ public class FullHouse extends javax.swing.JFrame {
                 try {
                     java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
                     String datum = mySqlDateToString(sqlDate);
-                    String soort = result.getString("toernooiSoort");
+                    String soort = result.getString("spelNaam");
                     String jTF = "Toernooi nr " + Integer.toString(ID) + ": " + soort + " op " + datum;
                     tfToernooiSelectie2.setText(jTF);
                 } catch (Exception e) {
@@ -1503,7 +1538,7 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
-            ResultSet result = stat.executeQuery("SELECT toernooiID, toernooiSoort, Toernooi.datum from Toernooi where toernooiID = '" + toernooiID + "'");
+            ResultSet result = stat.executeQuery("SELECT toernooiID, spelNaam, Toernooi.datum from Toernooi where toernooiID = '" + toernooiID + "'");
             while (result.next()) {
                 int ID = result.getInt("toernooiID");
                 //zet datum uit sql om naar weergave normale nl datum
@@ -1511,7 +1546,7 @@ public class FullHouse extends javax.swing.JFrame {
                 try {
                     java.sql.Date sqlDate = dateStringToMySqlDate(datumsql);
                     String datum = mySqlDateToString(sqlDate);
-                    String soort = result.getString("toernooiSoort");
+                    String soort = result.getString("spelNaam");
                     String jTF = "Toernooi nr " + Integer.toString(ID) + ": " + soort + " op " + datum;
                     tfToernooiSelectieInschrijvingen.setText(jTF);
                 } catch (Exception e) {
@@ -1525,7 +1560,7 @@ public class FullHouse extends javax.swing.JFrame {
         }
     }
 
-    private void bijwerkenDeelname() {
+    private void vulDeelname() {
         try {
             int selectie = jtDeelnameRegistratie.getSelectedRow();
             
@@ -1534,8 +1569,7 @@ public class FullHouse extends javax.swing.JFrame {
             toernooiID = jtDeelnameRegistratie.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             //maak het mogelijk om je resultset te wijzigen
-            Statement stat = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, 
-                    ResultSet.CONCUR_UPDATABLE);
+            Statement stat = conn.createStatement();
             ResultSet result = stat.executeQuery("SELECT Deelname.spelerID as 'Speler ID', Speler.naam as 'Speler', Deelname.toernooiID as 'Toernooi', BetaaldJN as 'Betaald?', mailOfTelefoon as 'Wijze van aanmelding'\n"
                     + "  FROM Deelname  \n"
                     + "  left outer join Speler\n"
@@ -1552,7 +1586,7 @@ public class FullHouse extends javax.swing.JFrame {
             DefaultTableModel tabelmodel = new DefaultTableModel() {
                 // maak typen in cel mogelijk
                 public boolean isCellEditable(int rowIndex, int mColIndex) {
-                    return true;
+                    return false;
                 }
             };
             //vul Array kolomnamen
@@ -1576,6 +1610,42 @@ public class FullHouse extends javax.swing.JFrame {
             System.out.println("SQL fout bij vullen lijst: " + e);
         }
     }
+    
+    
+//    private void kopieerDeelnemer() {
+//// table.getModel().getValueAt(row_index, col_index);
+//        int selectie = jtInschrijvingen.getSelectedRow();
+//        DefaultTableModel tabelmodel = new DefaultTableModel() {
+//                // maak typen in cel mogelijk
+//                public boolean isCellEditable(int rowIndex, int mColIndex) {
+//                    return false;
+//                }//vul Array kolomnamen
+//            for (int j = 0; j < 4; j++) {
+//                kolomnamen[j] = md.getColumnLabel(j + 1);
+//            }
+//            //ken kolomnamen toe aan tabelmodel
+//            tabelmodel.setColumnIdentifiers(kolomnamen);
+//            //vul jtActieveDeelnemers en vul tegelijk een arraylist
+//            while (result.next()) {
+//                // aantalKolommen staat voor aantal items in elke 'rij van het object'
+//                Object rijgegevens[] = new Object[aantalKolommen];
+//                for (int i = 0; i < aantalKolommen; i++) {
+//                    rijgegevens[i] = result.getObject(i + 1);
+//                }
+//                tabelmodel.addRow(rijgegevens);
+//            }
+//
+//        
+//        jtInschrijvingen1.addRow(rijgegevens);
+//        
+//                }
+//                }
+                
+    
+    
+    
+    
+    
 
     //VOOR ALLE TABBLADEN
     public static String mySqlDateToString(java.sql.Date date) {
@@ -1590,4 +1660,7 @@ public class FullHouse extends javax.swing.JFrame {
         java.util.Date parsed = format.parse(date);
         return new java.sql.Date(parsed.getTime());
     }
+
 }
+
+
