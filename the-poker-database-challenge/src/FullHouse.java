@@ -22,7 +22,6 @@ public class FullHouse extends javax.swing.JFrame {
     public static int rondeNR = 0;
     public static int rondeNRTafelIndeling = 0;
     public static int aantalRondes;
-    private int spelerID;
     private String speler;
     Object toernooiID;
     ArrayList<String> lijstWinnaars = new ArrayList<>();
@@ -1220,19 +1219,18 @@ public class FullHouse extends javax.swing.JFrame {
 
     // TABBLAD TAFELINDELING
     private void vulActieveDeelnemersTafels() {
-
         try {
             rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
-            toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
+            Object toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
             ResultSet result = stat2.executeQuery("SELECT Tafel.tafelNummer as 'Tafelnr',Tafel.rondeNummer as 'Rondenr', Speler.spelerID as 'Speler ID', Speler.naam as 'Speler'\n"
-                    + "  FROM Deelname  \n"
-                    + "  left outer join Tafel\n"
-                    + "  on Deelname.spelerID = Tafel.spelerID\n"
-                    + " left outer join Speler\n"
-                    + "  on Deelname.SpelerID = Speler.SpelerID\n"
+                    + "  FROM Tafel  \n"
+                    + "  left outer join Speler\n"
+                    + "  on Tafel.spelerID = Speler.spelerID\n"
+                    + " left outer join Deelname\n"
+                    + "  on Tafel.ToernooiID = Deelname.ToernooiID\n"
                     + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J'\n"
                     + " AND actiefInToernooiJN like 'J' AND Tafel.rondeNummer = " + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
             //vraag aantal kolommen uit metadata tabel
@@ -1278,10 +1276,10 @@ public class FullHouse extends javax.swing.JFrame {
             Statement stat2 = conn.createStatement();
             ResultSet result = stat2.executeQuery("SELECT count(Deelname.spelerID)\n"
                     + "  FROM Deelname  \n"
-                    + "  left outer join Tafel\n"
-                    + "  on Deelname.spelerID = Tafel.spelerID\n"
-                    + " left outer join Speler\n"
-                    + "  on Deelname.SpelerID = Speler.SpelerID\n"
+                    + "  left outer join Toernooi\n"
+                    + "  on Deelname.ToernooiID = Toernooi.ToernooiID\n"
+                    + " left outer join Tafel\n"
+                    + "  on Deelname.SpelerID = Tafel.SpelerID\n"
                     + "  where Deelname.toernooiID = '" + toernooiID + "' AND Deelname.betaaldJN like 'J'\n"
                     + " AND actiefInToernooiJN like 'J' AND Tafel.rondeNummer = " + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
             while (result.next()) {
@@ -1291,27 +1289,34 @@ public class FullHouse extends javax.swing.JFrame {
             }
 
             rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
-            ResultSet result2 = stat2.executeQuery("SELECT Tafel.ToernooiID, TafelCapaciteit.tafelNummer, TafelCapaciteit.maxAantalSpelers, Tafel.rondeNummer\n"
-                    + "FROM TafelCapaciteit  \n"
+            ResultSet result2 = stat2.executeQuery("SELECT Tafel.ToernooiID, \n"
+                    + "Tafel.rondeNummer, TafelCapaciteit.tafelNummer, \n"
+                    + "TafelCapaciteit.maxAantalSpelers, \n"
+                    + "Spelsoort.aantalSpelersTafelSpelSoort\n"
+                    + "FROM TafelCapaciteit\n"
                     + "inner join Tafel\n"
                     + "on TafelCapaciteit.tafelNummer = Tafel.tafelNummer\n"
-                    + "where Tafel.ToernooiID = '" + toernooiID + "' AND Tafel.rondeNummer = \n"
+                    + "inner join Toernooi\n"
+                    + "on Tafel.toernooiID = Toernooi.toernooiID\n"
+                    + "inner join Spelsoort\n"
+                    + "on Spelsoort.spelNaam = Toernooi.spelNaam\n"
+                    + "where Tafel.ToernooiID = '" + toernooiID 
+                    + "' AND Tafel.rondeNummer = \n"
                     + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
             while (result2.next()) {
                 // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
                 int maxAantalSpelersTafel = result2.getInt(3);
                 System.out.println(maxAantalSpelersTafel);
-            }
-            // TOE TE VOEGEN AAN DEZE TRY
             /*
-             if (maxAantalSpelersTafel = 2; maxAantalSpelersTafel < aantalSpelersTafelSpelSoort; y++){
-             if(( x % y) == (0)) {
-             }
-             }
-             else{
-             y++;
-             }
-             */
+                for (maxAantalSpelersTafel = 2; maxAantalSpelersTafel < aantalSpelersTafelSpelSoort; maxAantalSpelersTafel++){
+            if(( x % y) == (0)) {
+            }
+            }
+            else{
+            y++;
+            }
+                */
+            }
         } catch (SQLException f) {
             System.out.println("SQL fout bij vullen lijst: " + f);
         } catch (NullPointerException e) {
@@ -1469,7 +1474,7 @@ public class FullHouse extends javax.swing.JFrame {
         }
 
     }
-
+    //HIER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // TABBLAD RONDEWINNAARS
     private void selecteerWinnaars() {
         // selectie = geselecteerd toernooi
