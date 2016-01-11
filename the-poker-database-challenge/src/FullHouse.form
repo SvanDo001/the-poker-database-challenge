@@ -306,9 +306,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lbSelecteerToernooi" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane5" alignment="0" min="-2" pref="758" max="-2" attributes="0"/>
                           <Component id="lbTafelIndeling" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="btBerekenTafelIndeling" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -320,11 +319,12 @@
                               <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
                               <Component id="cbSelecteerRondeTafels" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" alignment="0" min="-2" pref="758" max="-2" attributes="0"/>
                           <Component id="lbActieveDeelnemersRonde" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane7" alignment="0" min="-2" pref="758" max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="836" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane7" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="450" max="32767" attributes="0"/>
+                      <EmptySpace pref="418" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
