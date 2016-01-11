@@ -889,24 +889,9 @@ public class FullHouse extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfToernooiSelectieTafelsPropertyChange
 
-    private void cbSelecteerRondeTafelsItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsItemStateChanged
-    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsItemStateChanged
-        vulActieveDeelnemersTafels();
-    }//GEN-LAST:event_cbSelecteerRondeTafelsItemStateChanged
-
-    private void cbSelecteerRondeTafelsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsMouseClicked
-    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsMouseClicked
-        haalRondeTafelIndeling();
-    }//GEN-LAST:event_cbSelecteerRondeTafelsMouseClicked
-
-    private void cbSelecteerRondeTafelsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsActionPerformed
-    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsActionPerformed
-
-    }//GEN-LAST:event_cbSelecteerRondeTafelsActionPerformed
-
     private void cbSelecteerRondeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbSelecteerRondeActionPerformed
     {//GEN-HEADEREND:event_cbSelecteerRondeActionPerformed
-
+        
     }//GEN-LAST:event_cbSelecteerRondeActionPerformed
 
     private void cbSelecteerRondeMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_cbSelecteerRondeMouseClicked
@@ -992,6 +977,21 @@ public class FullHouse extends javax.swing.JFrame {
     private void jtInschrijvingenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtInschrijvingenMousePressed
     //kopieerDeelnemer();
     }//GEN-LAST:event_jtInschrijvingenMousePressed
+
+    private void cbSelecteerRondeTafelsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsMouseClicked
+    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsMouseClicked
+        haalRondeTafelIndeling();
+    }//GEN-LAST:event_cbSelecteerRondeTafelsMouseClicked
+
+    private void cbSelecteerRondeTafelsItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsItemStateChanged
+    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsItemStateChanged
+        vulActieveDeelnemersTafels();
+    }//GEN-LAST:event_cbSelecteerRondeTafelsItemStateChanged
+
+    private void cbSelecteerRondeTafelsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsActionPerformed
+    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsActionPerformed
+        
+    }//GEN-LAST:event_cbSelecteerRondeTafelsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBerekenTafelIndeling;
@@ -1246,7 +1246,7 @@ public class FullHouse extends javax.swing.JFrame {
     private void selecteerToernooiTafelIndeling() {
         int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
         //selectie staat voor rij, 0 staat voor de kolom waarin het toernooiID staat:
-        Object toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
+        toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
@@ -1283,7 +1283,7 @@ public class FullHouse extends javax.swing.JFrame {
         //reset teller voor aantalRondes
         aantalRondes = 0;
         //selectie staat voor rij, 0 staat voor de kolom waarin het toernooiID staat:
-        Object toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
+        toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat1 = conn.createStatement();
@@ -1305,7 +1305,7 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
-            Object toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
+            toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
             ResultSet result = stat2.executeQuery("SELECT Deelname.toernooiID \n"
@@ -1432,7 +1432,7 @@ public class FullHouse extends javax.swing.JFrame {
     private void selecteerToernooi2() {
         int selectie = jtGeplandeToernooien2.getSelectedRow();
         //selectie staat voor rij, 0 staat voor de kolom waarin het toernooiID staat:
-        Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
+        toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
@@ -1465,7 +1465,7 @@ public class FullHouse extends javax.swing.JFrame {
         //reset teller voor aantalRondes
         aantalRondes = 0;
         //selectie staat voor rij, 0 staat voor de kolom waarin het toernooiID staat:
-        Object toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
+        toernooiID = jtGeplandeToernooien2.getValueAt(selectie, 0);
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat1 = conn.createStatement();
