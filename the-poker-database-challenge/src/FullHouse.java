@@ -64,13 +64,11 @@ public class FullHouse extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtActieveDeelnemersRonde = new javax.swing.JTable();
-        lbSelecteerRondeTafels = new javax.swing.JLabel();
         lbSelecteerToernooi = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jtGeplandeToernooienTafelIndeling = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         tfToernooiSelectieTafels = new javax.swing.JTextField();
-        cbSelecteerRondeTafels = new javax.swing.JComboBox<>();
         lbTafelIndeling = new javax.swing.JLabel();
         btBerekenTafelIndeling = new javax.swing.JButton();
         lbActieveDeelnemersRonde = new javax.swing.JLabel();
@@ -290,8 +288,6 @@ public class FullHouse extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jtActieveDeelnemersRonde);
 
-        lbSelecteerRondeTafels.setText("Selecteer ronde:");
-
         lbSelecteerToernooi.setText("Selecteer het toernooi:");
 
         jtGeplandeToernooienTafelIndeling.setAutoCreateRowSorter(true);
@@ -332,28 +328,6 @@ public class FullHouse extends javax.swing.JFrame {
             public void propertyChange(java.beans.PropertyChangeEvent evt)
             {
                 tfToernooiSelectieTafelsPropertyChange(evt);
-            }
-        });
-
-        cbSelecteerRondeTafels.addItemListener(new java.awt.event.ItemListener()
-        {
-            public void itemStateChanged(java.awt.event.ItemEvent evt)
-            {
-                cbSelecteerRondeTafelsItemStateChanged(evt);
-            }
-        });
-        cbSelecteerRondeTafels.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                cbSelecteerRondeTafelsMouseClicked(evt);
-            }
-        });
-        cbSelecteerRondeTafels.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                cbSelecteerRondeTafelsActionPerformed(evt);
             }
         });
 
@@ -403,11 +377,7 @@ public class FullHouse extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(38, 38, 38)
-                        .addComponent(tfToernooiSelectieTafels, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbSelecteerRondeTafels)
-                        .addGap(38, 38, 38)
-                        .addComponent(cbSelecteerRondeTafels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfToernooiSelectieTafels, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lbActieveDeelnemersRonde)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
@@ -424,9 +394,7 @@ public class FullHouse extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfToernooiSelectieTafels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(lbSelecteerRondeTafels)
-                    .addComponent(cbSelecteerRondeTafels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addComponent(lbActieveDeelnemersRonde)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -437,7 +405,7 @@ public class FullHouse extends javax.swing.JFrame {
                 .addComponent(lbTafelIndeling)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tafelindeling toernooi", jPanel3);
@@ -929,18 +897,8 @@ public class FullHouse extends javax.swing.JFrame {
     private void jtGeplandeToernooienTafelIndelingMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtGeplandeToernooienTafelIndelingMousePressed
     {//GEN-HEADEREND:event_jtGeplandeToernooienTafelIndelingMousePressed
         //ververs combobox: leegmaken
-        cbSelecteerRondeTafels.removeAllItems();
         selecteerToernooiTafelIndeling();
-        haalRondeTafelIndeling();
-        //als toernooi nog geen rondes heeft, geen actieve deelnemers weergeven:
-        if (aantalRondes == 0) {
-            //voor de goede orde, leeg je tabel
-            jtActieveDeelnemersRonde.removeAll();
-            //vul tabel met leeg model
-            DefaultTableModel leegmodel = new DefaultTableModel();
-            jtActieveDeelnemersRonde.setModel(leegmodel);
-            jtActieveDeelnemersRonde.repaint();
-        }
+        vulActieveDeelnemersTafels();
     }//GEN-LAST:event_jtGeplandeToernooienTafelIndelingMousePressed
 
     private void jtTafelIndelingToernooiMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jtTafelIndelingToernooiMouseClicked
@@ -978,21 +936,6 @@ public class FullHouse extends javax.swing.JFrame {
     //kopieerDeelnemer();
     }//GEN-LAST:event_jtInschrijvingenMousePressed
 
-    private void cbSelecteerRondeTafelsMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsMouseClicked
-    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsMouseClicked
-        haalRondeTafelIndeling();
-    }//GEN-LAST:event_cbSelecteerRondeTafelsMouseClicked
-
-    private void cbSelecteerRondeTafelsItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsItemStateChanged
-    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsItemStateChanged
-        vulActieveDeelnemersTafels();
-    }//GEN-LAST:event_cbSelecteerRondeTafelsItemStateChanged
-
-    private void cbSelecteerRondeTafelsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cbSelecteerRondeTafelsActionPerformed
-    {//GEN-HEADEREND:event_cbSelecteerRondeTafelsActionPerformed
-        
-    }//GEN-LAST:event_cbSelecteerRondeTafelsActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBerekenTafelIndeling;
     private javax.swing.JButton btOpenOverzicht;
@@ -1001,7 +944,6 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JButton btRegistreerKnockOuts;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Integer> cbSelecteerRonde;
-    private javax.swing.JComboBox<Integer> cbSelecteerRondeTafels;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1039,7 +981,6 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JLabel lbActieveDeelnemersRonde;
     private javax.swing.JLabel lbActieveDeelnemersRonde1;
     private javax.swing.JLabel lbSelecteerRonde;
-    private javax.swing.JLabel lbSelecteerRondeTafels;
     private javax.swing.JLabel lbSelecteerToernooi;
     private javax.swing.JLabel lbSelecteerToernooi1;
     private javax.swing.JLabel lbSelecteerWinnaars;
@@ -1277,33 +1218,8 @@ public class FullHouse extends javax.swing.JFrame {
     }
 
     // TABBLAD TAFELINDELING
-    private void haalRondeTafelIndeling() {
-        // vul combobox met rondenrs
-        int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
-        //reset teller voor aantalRondes
-        aantalRondes = 0;
-        //selectie staat voor rij, 0 staat voor de kolom waarin het toernooiID staat:
-        toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
-        try {
-            Connection conn = SimpleDataSourceV2.getConnection();
-            Statement stat1 = conn.createStatement();
-            ResultSet result = stat1.executeQuery("SELECT Ronde.rondeNummer "
-                    + "from Ronde where Ronde.toernooiID =" + toernooiID);
-            //vul combobox cb SelecteerRonde
-            while (result.next()) {
-                rondeNRTafelIndeling = result.getInt(1);
-                cbSelecteerRondeTafels.addItem(rondeNRTafelIndeling);
-                aantalRondes++;
-            }
-        } catch (SQLException e) {
-            System.out.println("SQL fout bij vullen lijst: " + e);
-        }
-    }
-
-    // TABBLAD TAFELINDELING
     private void vulActieveDeelnemersTafels() {
         try {
-            rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             int selectie = jtGeplandeToernooienTafelIndeling.getSelectedRow();
             toernooiID = jtGeplandeToernooienTafelIndeling.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
@@ -1317,7 +1233,7 @@ public class FullHouse extends javax.swing.JFrame {
                     + " where Deelname.toernooiID = '" + toernooiID + "'\n"
                     + " AND Deelname.betaaldJN like 'J'\n"
                     + " AND Deelname.actiefInToernooiJN like 'J'\n"
-                    + " order by Deelname.spelerID");
+                    + " order by Deelname.spelerID ");            
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
@@ -1356,7 +1272,6 @@ public class FullHouse extends javax.swing.JFrame {
     // TABBLAD TAFELINDELING
     private void berekenTafelIndelingSpelers() {
         try {
-            rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
             ResultSet result = stat2.executeQuery("SELECT count(Deelname.spelerID)\n"
@@ -1367,8 +1282,6 @@ public class FullHouse extends javax.swing.JFrame {
                 int aantalActieveSpelersRonde = result.getInt(1);
                 System.out.println(aantalActieveSpelersRonde);
             }
-
-            rondeNRTafelIndeling = (Integer) cbSelecteerRondeTafels.getSelectedItem();
             ResultSet result2 = stat2.executeQuery("SELECT Tafel.ToernooiID, \n"
                     + "Tafel.rondeNummer, TafelCapaciteit.tafelNummer, \n"
                     + "TafelCapaciteit.maxAantalSpelers, \n"
