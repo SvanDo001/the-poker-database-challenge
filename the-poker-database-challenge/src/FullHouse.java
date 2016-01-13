@@ -20,7 +20,6 @@ public class FullHouse extends javax.swing.JFrame {
     public static String[] kolomnamen;
     public static String labeltekst;
     public static int rondeNR = 0;
-    public static int rondeNRTafelIndeling = 0;
     public static int aantalRondes;
     private String speler;
     Object toernooiID;
@@ -44,8 +43,7 @@ public class FullHouse extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -84,7 +82,7 @@ public class FullHouse extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         lbSelecteerWinnaars = new javax.swing.JLabel();
         lbSelecteerRonde = new javax.swing.JLabel();
-        cbSelecteerRonde = new javax.swing.JComboBox<>();
+        cbSelecteerRonde = new javax.swing.JComboBox<Integer>();
         btRegistreerKnockOuts = new javax.swing.JButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jLayeredPane2 = new javax.swing.JLayeredPane();
@@ -99,7 +97,9 @@ public class FullHouse extends javax.swing.JFrame {
         jtInschrijvingen = new javax.swing.JTable();
         lbActieveDeelnemersRonde1 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jtInschrijvingen1 = new javax.swing.JTable();
+        jtWijzigInschrijving = new javax.swing.JTable();
+        jbWijzigDeelname1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -109,19 +109,15 @@ public class FullHouse extends javax.swing.JFrame {
 
         jtGeplandeToernooien.setAutoCreateRowSorter(true);
         jtGeplandeToernooien.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtGeplandeToernooien.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtGeplandeToernooien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtGeplandeToernooienMouseClicked(evt);
             }
         });
@@ -133,10 +129,8 @@ public class FullHouse extends javax.swing.JFrame {
         tfToernooiSelectie.setEnabled(false);
         tfToernooiSelectie.setName("toernooiSelectie"); // NOI18N
         tfToernooiSelectie.setSelectionColor(new java.awt.Color(0, 0, 0));
-        tfToernooiSelectie.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tfToernooiSelectie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfToernooiSelectieActionPerformed(evt);
             }
         });
@@ -144,39 +138,31 @@ public class FullHouse extends javax.swing.JFrame {
         buttonGroup1.add(rbToernooiNietBetaald);
         rbToernooiNietBetaald.setSelected(true);
         rbToernooiNietBetaald.setText("Overzicht  ingeschreven deelnemers voor geselecteerd toernooi - NOG NIET BETAALD");
-        rbToernooiNietBetaald.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        rbToernooiNietBetaald.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbToernooiNietBetaaldActionPerformed(evt);
             }
         });
 
         buttonGroup1.add(rbToernooiWelBetaald);
         rbToernooiWelBetaald.setText("Overzicht ingeschreven deelnemers voor geselecteerd toernooi - WEL BETAALD");
-        rbToernooiWelBetaald.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        rbToernooiWelBetaald.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbToernooiWelBetaaldActionPerformed(evt);
             }
         });
 
         buttonGroup1.add(rbAlleNietBetaald);
         rbAlleNietBetaald.setText("Overzicht ALLE ingeschreven deelnemers die NOG NIET BETAALD hebben");
-        rbAlleNietBetaald.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        rbAlleNietBetaald.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbAlleNietBetaaldActionPerformed(evt);
             }
         });
 
         btOpenOverzicht.setText("Open overzicht");
-        btOpenOverzicht.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btOpenOverzicht.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btOpenOverzichtActionPerformed(evt);
             }
         });
@@ -185,7 +171,7 @@ public class FullHouse extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1220, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1264, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +201,7 @@ public class FullHouse extends javax.swing.JFrame {
                 .addComponent(rbAlleNietBetaald)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btOpenOverzicht)
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Geplande toernooien", jPanel1);
@@ -223,10 +209,8 @@ public class FullHouse extends javax.swing.JFrame {
         btOverzichtSpelersAdres.setText("Overzicht spelers - Adresgegevens");
         btOverzichtSpelersAdres.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btOverzichtSpelersAdres.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btOverzichtSpelersAdres.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btOverzichtSpelersAdres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btOverzichtSpelersAdresActionPerformed(evt);
             }
         });
@@ -234,10 +218,8 @@ public class FullHouse extends javax.swing.JFrame {
         btOverzichtSpelersRating.setText("Overzicht spelers - Rating en gewonnen inleggeld");
         btOverzichtSpelersRating.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btOverzichtSpelersRating.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        btOverzichtSpelersRating.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btOverzichtSpelersRating.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btOverzichtSpelersRatingActionPerformed(evt);
             }
         });
@@ -251,7 +233,7 @@ public class FullHouse extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btOverzichtSpelersAdres, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                     .addComponent(btOverzichtSpelersRating, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(941, Short.MAX_VALUE))
+                .addContainerGap(985, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btOverzichtSpelersAdres, btOverzichtSpelersRating});
@@ -263,26 +245,22 @@ public class FullHouse extends javax.swing.JFrame {
                 .addComponent(btOverzichtSpelersAdres)
                 .addGap(28, 28, 28)
                 .addComponent(btOverzichtSpelersRating)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addContainerGap(487, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Spelersoverzichten", jPanel2);
 
         jtActieveDeelnemersRonde.setAutoCreateRowSorter(true);
         jtActieveDeelnemersRonde.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtActieveDeelnemersRonde.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtActieveDeelnemersRonde.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtActieveDeelnemersRondeMouseClicked(evt);
             }
         });
@@ -292,19 +270,15 @@ public class FullHouse extends javax.swing.JFrame {
 
         jtGeplandeToernooienTafelIndeling.setAutoCreateRowSorter(true);
         jtGeplandeToernooienTafelIndeling.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtGeplandeToernooienTafelIndeling.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+        jtGeplandeToernooienTafelIndeling.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtGeplandeToernooienTafelIndelingMousePressed(evt);
             }
         });
@@ -316,17 +290,13 @@ public class FullHouse extends javax.swing.JFrame {
         tfToernooiSelectieTafels.setEnabled(false);
         tfToernooiSelectieTafels.setName("toernooiSelectie"); // NOI18N
         tfToernooiSelectieTafels.setSelectionColor(new java.awt.Color(0, 0, 0));
-        tfToernooiSelectieTafels.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tfToernooiSelectieTafels.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfToernooiSelectieTafelsActionPerformed(evt);
             }
         });
-        tfToernooiSelectieTafels.addPropertyChangeListener(new java.beans.PropertyChangeListener()
-        {
-            public void propertyChange(java.beans.PropertyChangeEvent evt)
-            {
+        tfToernooiSelectieTafels.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tfToernooiSelectieTafelsPropertyChange(evt);
             }
         });
@@ -334,10 +304,8 @@ public class FullHouse extends javax.swing.JFrame {
         lbTafelIndeling.setText("Tafelindeling:");
 
         btBerekenTafelIndeling.setText("BEREKEN TAFELINDELING");
-        btBerekenTafelIndeling.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btBerekenTafelIndeling.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBerekenTafelIndelingActionPerformed(evt);
             }
         });
@@ -346,19 +314,15 @@ public class FullHouse extends javax.swing.JFrame {
 
         jtTafelIndelingToernooi.setAutoCreateRowSorter(true);
         jtTafelIndelingToernooi.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtTafelIndelingToernooi.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtTafelIndelingToernooi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtTafelIndelingToernooiMouseClicked(evt);
             }
         });
@@ -405,26 +369,22 @@ public class FullHouse extends javax.swing.JFrame {
                 .addComponent(lbTafelIndeling)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tafelindeling toernooi", jPanel3);
 
         jtActieveDeelnemers.setAutoCreateRowSorter(true);
         jtActieveDeelnemers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtActieveDeelnemers.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtActieveDeelnemers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtActieveDeelnemersMouseClicked(evt);
             }
         });
@@ -432,23 +392,18 @@ public class FullHouse extends javax.swing.JFrame {
 
         jtGeplandeToernooien2.setAutoCreateRowSorter(true);
         jtGeplandeToernooien2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtGeplandeToernooien2.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtGeplandeToernooien2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtGeplandeToernooien2MouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtGeplandeToernooien2MousePressed(evt);
             }
         });
@@ -460,17 +415,13 @@ public class FullHouse extends javax.swing.JFrame {
         tfToernooiSelectie2.setEnabled(false);
         tfToernooiSelectie2.setName("toernooiSelectie"); // NOI18N
         tfToernooiSelectie2.setSelectionColor(new java.awt.Color(0, 0, 0));
-        tfToernooiSelectie2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tfToernooiSelectie2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfToernooiSelectie2ActionPerformed(evt);
             }
         });
-        tfToernooiSelectie2.addPropertyChangeListener(new java.beans.PropertyChangeListener()
-        {
-            public void propertyChange(java.beans.PropertyChangeEvent evt)
-            {
+        tfToernooiSelectie2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tfToernooiSelectie2PropertyChange(evt);
             }
         });
@@ -481,33 +432,25 @@ public class FullHouse extends javax.swing.JFrame {
 
         lbSelecteerRonde.setText("Selecteer ronde:");
 
-        cbSelecteerRonde.addItemListener(new java.awt.event.ItemListener()
-        {
-            public void itemStateChanged(java.awt.event.ItemEvent evt)
-            {
+        cbSelecteerRonde.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbSelecteerRondeItemStateChanged(evt);
             }
         });
-        cbSelecteerRonde.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        cbSelecteerRonde.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cbSelecteerRondeMouseClicked(evt);
             }
         });
-        cbSelecteerRonde.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        cbSelecteerRonde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbSelecteerRondeActionPerformed(evt);
             }
         });
 
         btRegistreerKnockOuts.setText("REGISTREER TAFELWINNAARS");
-        btRegistreerKnockOuts.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        btRegistreerKnockOuts.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btRegistreerKnockOutsActionPerformed(evt);
             }
         });
@@ -533,7 +476,7 @@ public class FullHouse extends javax.swing.JFrame {
                             .addGap(38, 38, 38)
                             .addComponent(cbSelecteerRonde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btRegistreerKnockOuts)))
-                .addContainerGap(450, Short.MAX_VALUE))
+                .addContainerGap(496, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -556,7 +499,7 @@ public class FullHouse extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRegistreerKnockOuts)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Invoer rondewinnaars", jPanel4);
@@ -565,11 +508,11 @@ public class FullHouse extends javax.swing.JFrame {
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1220, Short.MAX_VALUE)
+            .addGap(0, 1264, Short.MAX_VALUE)
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 585, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Toernooien bewerken", jLayeredPane1);
@@ -578,11 +521,11 @@ public class FullHouse extends javax.swing.JFrame {
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1220, Short.MAX_VALUE)
+            .addGap(0, 1264, Short.MAX_VALUE)
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 585, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Spelers bewerken", jLayeredPane2);
@@ -591,34 +534,29 @@ public class FullHouse extends javax.swing.JFrame {
         jLayeredPane3.setLayout(jLayeredPane3Layout);
         jLayeredPane3Layout.setHorizontalGroup(
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1220, Short.MAX_VALUE)
+            .addGap(0, 1264, Short.MAX_VALUE)
         );
         jLayeredPane3Layout.setVerticalGroup(
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 585, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Locatie bewerken", jLayeredPane3);
 
         jtDeelnameRegistratie.setAutoCreateRowSorter(true);
         jtDeelnameRegistratie.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtDeelnameRegistratie.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtDeelnameRegistratie.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtDeelnameRegistratieMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtDeelnameRegistratieMousePressed(evt);
             }
         });
@@ -630,17 +568,13 @@ public class FullHouse extends javax.swing.JFrame {
         tfToernooiSelectieInschrijvingen.setEnabled(false);
         tfToernooiSelectieInschrijvingen.setName("toernooiSelectie"); // NOI18N
         tfToernooiSelectieInschrijvingen.setSelectionColor(new java.awt.Color(0, 0, 0));
-        tfToernooiSelectieInschrijvingen.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        tfToernooiSelectieInschrijvingen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfToernooiSelectieInschrijvingenActionPerformed(evt);
             }
         });
-        tfToernooiSelectieInschrijvingen.addPropertyChangeListener(new java.beans.PropertyChangeListener()
-        {
-            public void propertyChange(java.beans.PropertyChangeEvent evt)
-            {
+        tfToernooiSelectieInschrijvingen.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tfToernooiSelectieInschrijvingenPropertyChange(evt);
             }
         });
@@ -649,23 +583,18 @@ public class FullHouse extends javax.swing.JFrame {
 
         jtInschrijvingen.setAutoCreateRowSorter(true);
         jtInschrijvingen.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtInschrijvingen.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jtInschrijvingen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtInschrijvingenMouseClicked(evt);
             }
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jtInschrijvingenMousePressed(evt);
             }
         });
@@ -673,33 +602,30 @@ public class FullHouse extends javax.swing.JFrame {
 
         lbActieveDeelnemersRonde1.setText("Selecteer Speler");
 
-        jtInschrijvingen1.setAutoCreateRowSorter(true);
-        jtInschrijvingen1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+        jtWijzigInschrijving.setAutoCreateRowSorter(true);
+        jtWijzigInschrijving.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtInschrijvingen1.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                jtInschrijvingen1MouseClicked(evt);
+        jtWijzigInschrijving.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtWijzigInschrijvingMouseClicked(evt);
             }
         });
-        jScrollPane9.setViewportView(jtInschrijvingen1);
+        jScrollPane9.setViewportView(jtWijzigInschrijving);
 
-        jLayeredPane4.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(tfToernooiSelectieInschrijvingen, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(lbSelecteerToernooi1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(jScrollPane8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(lbActieveDeelnemersRonde1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(jScrollPane9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jbWijzigDeelname1.setText("OPSLAAN");
+        jbWijzigDeelname1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbWijzigDeelname1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Wijzig gegevens inschrijving:");
 
         javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
         jLayeredPane4.setLayout(jLayeredPane4Layout);
@@ -716,8 +642,10 @@ public class FullHouse extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addComponent(tfToernooiSelectieInschrijvingen, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbWijzigDeelname1)
+                    .addComponent(jLabel1))
+                .addGap(0, 506, Short.MAX_VALUE))
         );
         jLayeredPane4Layout.setVerticalGroup(
             jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -734,10 +662,23 @@ public class FullHouse extends javax.swing.JFrame {
                 .addComponent(lbActieveDeelnemersRonde1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbWijzigDeelname1)
+                .addContainerGap(101, Short.MAX_VALUE))
         );
+        jLayeredPane4.setLayer(jScrollPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(tfToernooiSelectieInschrijvingen, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(lbSelecteerToernooi1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jScrollPane8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(lbActieveDeelnemersRonde1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jScrollPane9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jbWijzigDeelname1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jTabbedPane1.addTab("Deelnameregistratie", jLayeredPane4);
 
@@ -928,13 +869,17 @@ public class FullHouse extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jtDeelnameRegistratieMousePressed
 
-    private void jtInschrijvingen1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtInschrijvingen1MouseClicked
+    private void jtWijzigInschrijvingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtWijzigInschrijvingMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtInschrijvingen1MouseClicked
+    }//GEN-LAST:event_jtWijzigInschrijvingMouseClicked
 
     private void jtInschrijvingenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtInschrijvingenMousePressed
-    //kopieerDeelnemer();
+        kopieerDeelnemer();
     }//GEN-LAST:event_jtInschrijvingenMousePressed
+
+    private void jbWijzigDeelname1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbWijzigDeelname1ActionPerformed
+        wijzigDeelname();
+    }//GEN-LAST:event_jbWijzigDeelname1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBerekenTafelIndeling;
@@ -944,6 +889,7 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JButton btRegistreerKnockOuts;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<Integer> cbSelecteerRonde;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -969,6 +915,7 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jbWijzigDeelname1;
     private javax.swing.JTable jtActieveDeelnemers;
     private javax.swing.JTable jtActieveDeelnemersRonde;
     private javax.swing.JTable jtDeelnameRegistratie;
@@ -976,8 +923,8 @@ public class FullHouse extends javax.swing.JFrame {
     private javax.swing.JTable jtGeplandeToernooien2;
     private javax.swing.JTable jtGeplandeToernooienTafelIndeling;
     private javax.swing.JTable jtInschrijvingen;
-    private javax.swing.JTable jtInschrijvingen1;
     private javax.swing.JTable jtTafelIndelingToernooi;
+    private javax.swing.JTable jtWijzigInschrijving;
     private javax.swing.JLabel lbActieveDeelnemersRonde;
     private javax.swing.JLabel lbActieveDeelnemersRonde1;
     private javax.swing.JLabel lbSelecteerRonde;
@@ -1233,7 +1180,11 @@ public class FullHouse extends javax.swing.JFrame {
                     + " where Deelname.toernooiID = '" + toernooiID + "'\n"
                     + " AND Deelname.betaaldJN like 'J'\n"
                     + " AND Deelname.actiefInToernooiJN like 'J'\n"
-                    + " order by Deelname.spelerID ");            
+<<<<<<< HEAD
+                    + " order by Deelname.spelerID");            
+=======
+                    + " order by Deelname.spelerID");
+>>>>>>> origin/master
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
@@ -1274,17 +1225,22 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
-            ResultSet result = stat2.executeQuery("SELECT count(Deelname.spelerID)\n"
-                    + " FROM Deelname\n"
-                    + " WHERE Deelname.toernooiID = '" + toernooiID + "'");
+            ResultSet result = stat2.executeQuery("SELECT count(Deelname.SpelerID) "
+                    + "as 'Speler ID' FROM Deelname\n"
+                    + " where Deelname.toernooiID = '" + toernooiID + "'\n"
+                    + " AND Deelname.betaaldJN like 'J'\n"
+                    + " AND Deelname.actiefInToernooiJN like 'J'\n"
+                    + " order by Deelname.spelerID");
             while (result.next()) {
-                // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
+                // aantalActieveSpelersRonde zijn het totaal aantal deelnemers 
+                // die ingeschreven en betaald hebben
                 int aantalActieveSpelersRonde = result.getInt(1);
                 System.out.println(aantalActieveSpelersRonde);
             }
-            ResultSet result2 = stat2.executeQuery("SELECT Tafel.ToernooiID, \n"
+            int i = 0;
+            ModelItemMaxAantalSpelersSpelSoort maxAantalSpelersSpelSoortAll = new ModelItemMaxAantalSpelersSpelSoort();
+            ResultSet result2 = stat2.executeQuery("SELECT Tafel.toernooiID, \n"
                     + "Tafel.rondeNummer, TafelCapaciteit.tafelNummer, \n"
-                    + "TafelCapaciteit.maxAantalSpelers, \n"
                     + "Spelsoort.aantalSpelersTafelSpelSoort\n"
                     + "FROM TafelCapaciteit\n"
                     + "inner join Tafel\n"
@@ -1293,13 +1249,18 @@ public class FullHouse extends javax.swing.JFrame {
                     + "on Tafel.toernooiID = Toernooi.toernooiID\n"
                     + "inner join Spelsoort\n"
                     + "on Spelsoort.spelNaam = Toernooi.spelNaam\n"
-                    + "where Tafel.ToernooiID = '" + toernooiID 
-                    + "' AND Tafel.rondeNummer = \n"
-                    + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
+                    + "where Tafel.ToernooiID = '" + toernooiID + "' \n"
+                    + "order by Toernooi.toernooiID");
             while (result2.next()) {
-                // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
-                int maxAantalSpelersTafel = result2.getInt(3);
-                System.out.println(maxAantalSpelersTafel);
+                // aantalSpelersTafelSpelSoort zijn het maximaal aantal spelers 
+                // per spelsoort
+                maxAantalSpelersSpelSoortAll.toernooiID = result2.getInt(1);
+                maxAantalSpelersSpelSoortAll.maxAantalSpelersSpelSoort = result2.getInt(4);
+                
+                System.out.println("rij index:  " + i);
+                System.out.println("toernooiID in modelitem: " + maxAantalSpelersSpelSoortAll.toernooiID);
+                System.out.println("maxAantalSpelersSpelSoort in modelitem: " + maxAantalSpelersSpelSoortAll.maxAantalSpelersSpelSoort);
+                i++;
             /*
                 for (maxAantalSpelersTafel = 2; maxAantalSpelersTafel < aantalSpelersTafelSpelSoort; maxAantalSpelersTafel++){
             if(( x % y) == (0)) {
@@ -1561,9 +1522,7 @@ public class FullHouse extends javax.swing.JFrame {
     private void vulDeelname() {
         try {
             int selectie = jtDeelnameRegistratie.getSelectedRow();
-            
     //selectie staat voor rij, 0 staat voor de kolom waarin het toernooiID staat:
-            System.out.println("1530 check rijindex: " + selectie);
             toernooiID = jtDeelnameRegistratie.getValueAt(selectie, 0);
             Connection conn = SimpleDataSourceV2.getConnection();
             //maak het mogelijk om je resultset te wijzigen
@@ -1574,15 +1533,14 @@ public class FullHouse extends javax.swing.JFrame {
                     + "  on Deelname.SpelerID = Speler.SpelerID\n"
                     + "  where Deelname.toernooiID = '" + toernooiID + "' \n"
                     + "  order by toernooiID");
-            
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
             // maak lege Array voor kolomnamen
             kolomnamen = new String[aantalKolommen];
-            // maak een DefaultTableModel met de naam tabelmodel
+            // maak een DefaultTableModel met de naam tabelmodel tbv jtInschrijvingen
             DefaultTableModel tabelmodel = new DefaultTableModel() {
-                // maak typen in cel mogelijk
+                // maak typen in cel onmogelijk
                 public boolean isCellEditable(int rowIndex, int mColIndex) {
                     return false;
                 }
@@ -1593,58 +1551,84 @@ public class FullHouse extends javax.swing.JFrame {
             }
             //ken kolomnamen toe aan tabelmodel
             tabelmodel.setColumnIdentifiers(kolomnamen);
-            //vul jtActieveDeelnemers en vul tegelijk een arraylist
+            // maak een DefaultTableModel met de naam tabelmodel tbv jtWijzigSpeler
+            DefaultTableModel tabelmodel2 = new DefaultTableModel() {
+                // maak typen in cel mogelijk
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return true;
+                }
+            };
+            //tabelmodel2.setColumnCount(aantalKolommen);
+            tabelmodel2.setColumnIdentifiers(kolomnamen);
             while (result.next()) {
                 // aantalKolommen staat voor aantal items in elke 'rij van het object'
                 Object rijgegevens[] = new Object[aantalKolommen];
+                Object rijgegevens2[] = new Object[aantalKolommen];
                 for (int i = 0; i < aantalKolommen; i++) {
                     rijgegevens[i] = result.getObject(i + 1);
                 }
                 tabelmodel.addRow(rijgegevens);
+                jtInschrijvingen.setModel(tabelmodel);
+                // vul 1 lege rij in jtWijzigSpeler
+                tabelmodel2.addRow(rijgegevens2);
+                jtWijzigInschrijving.setModel(tabelmodel2);
             }
 
             jtInschrijvingen.setModel(tabelmodel);
         } catch (SQLException e) {
             System.out.println("SQL fout bij vullen lijst: " + e);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
         }
     }
     
+    private void kopieerDeelnemer() {
+        jtWijzigInschrijving.removeAll();
+        jtWijzigInschrijving.repaint();
+        int selectieDeelnemer = jtInschrijvingen.getSelectedRow();
+        Object spelerID = (String)jtInschrijvingen.getValueAt(selectieDeelnemer, 0).toString();
+        Object spelerNaam = (String) jtInschrijvingen.getValueAt(selectieDeelnemer, 1).toString();
+        Object IDtoernooi = jtInschrijvingen.getValueAt(selectieDeelnemer, 2);
+        Object betaald = (String) jtInschrijvingen.getValueAt(0, 3).toString();
+        Object mailOfTelefoon = (String) jtInschrijvingen.getValueAt(0, 4).toString();
+        jtWijzigInschrijving.setValueAt(spelerID, 0, 0);
+        jtWijzigInschrijving.setValueAt(spelerNaam, 0, 1);
+        jtWijzigInschrijving.setValueAt(IDtoernooi, 0, 2);
+        jtWijzigInschrijving.setValueAt(betaald, 0, 3);
+        jtWijzigInschrijving.setValueAt(mailOfTelefoon, 0, 4);
+        jtWijzigInschrijving.repaint();
+    }
     
-//    private void kopieerDeelnemer() {
-//// table.getModel().getValueAt(row_index, col_index);
-//        int selectie = jtInschrijvingen.getSelectedRow();
-//        DefaultTableModel tabelmodel = new DefaultTableModel() {
-//                // maak typen in cel mogelijk
-//                public boolean isCellEditable(int rowIndex, int mColIndex) {
-//                    return false;
-//                }//vul Array kolomnamen
-//            for (int j = 0; j < 4; j++) {
-//                kolomnamen[j] = md.getColumnLabel(j + 1);
-//            }
-//            //ken kolomnamen toe aan tabelmodel
-//            tabelmodel.setColumnIdentifiers(kolomnamen);
-//            //vul jtActieveDeelnemers en vul tegelijk een arraylist
-//            while (result.next()) {
-//                // aantalKolommen staat voor aantal items in elke 'rij van het object'
-//                Object rijgegevens[] = new Object[aantalKolommen];
-//                for (int i = 0; i < aantalKolommen; i++) {
-//                    rijgegevens[i] = result.getObject(i + 1);
-//                }
-//                tabelmodel.addRow(rijgegevens);
-//            }
-//
-//        
-//        jtInschrijvingen1.addRow(rijgegevens);
-//        
-//                }
-//                }
-                
+    private void wijzigDeelname() {
+        //vul met 1 voor 't geval er geen rij is geselecteerd en er toch wordt opgeslagen, voorkomt vastloper indexoutofbounds
+        int selectieWijzigDeelname = 1;       
+        selectieWijzigDeelname = jtWijzigInschrijving.getSelectedRow();
+        System.out.println("1592 rij index:"+ selectieWijzigDeelname);
+        String speler = (String)jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 0).toString();
+        Object spelerID = Integer.parseInt(speler);
+        // Object spelerNaam = jtWijzigInschrijving.getValueAt(selectieWijzigDeelname,1);
+        Object IDtoernooi = jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 2);
+        Object betaald = jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 3);
+        Object mailOfTelefoon = jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 4);
+        Object actiefInToernooi = "X";
+        if (betaald.equals("J")) {
+            actiefInToernooi = "'J'";
+        } else {
+            actiefInToernooi = "'N'";
     
+        }
+        try {
+            Connection conn = SimpleDataSourceV2.getConnection();
+            Statement stat = conn.createStatement();
+            stat.executeUpdate("UPDATE pokerdatabase.Deelname (spelerID, toernooiID, betaaldJN, mailOfTelefoon, actiefInToernooiJN) VALUES\n"
+                    + " (" + spelerID + "," + IDtoernooi + "," + betaald + "," + mailOfTelefoon + "," + actiefInToernooi + ")");
     
+        } catch (SQLException f) {
+            System.out.println("SQL fout bij vullen lijst: " + f);
+        }
     
+    }
     
-    
-
     //VOOR ALLE TABBLADEN
     public static String mySqlDateToString(java.sql.Date date) {
         /* ik schrijf de datum als dd-mm-yyyy */
@@ -1660,5 +1644,3 @@ public class FullHouse extends javax.swing.JFrame {
     }
 
 }
-
-
