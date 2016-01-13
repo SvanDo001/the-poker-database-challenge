@@ -1180,11 +1180,8 @@ public class FullHouse extends javax.swing.JFrame {
                     + " where Deelname.toernooiID = '" + toernooiID + "'\n"
                     + " AND Deelname.betaaldJN like 'J'\n"
                     + " AND Deelname.actiefInToernooiJN like 'J'\n"
-<<<<<<< HEAD
-                    + " order by Deelname.spelerID");            
-=======
-                    + " order by Deelname.spelerID");
->>>>>>> origin/master
+                    + " order by Deelname.spelerID");          
+
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
