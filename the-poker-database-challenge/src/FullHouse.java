@@ -20,6 +20,7 @@ public class FullHouse extends javax.swing.JFrame {
     public static String[] kolomnamen;
     public static String labeltekst;
     public static int rondeNR = 0;
+    public static int rondeNRTafelIndeling = 0;
     public static int aantalRondes;
     private String speler;
     Object toernooiID;
@@ -1232,7 +1233,7 @@ public class FullHouse extends javax.swing.JFrame {
                     + " where Deelname.toernooiID = '" + toernooiID + "'\n"
                     + " AND Deelname.betaaldJN like 'J'\n"
                     + " AND Deelname.actiefInToernooiJN like 'J'\n"
-                    + " order by Deelname.spelerID");            
+                    + " order by Deelname.spelerID ");            
             //vraag aantal kolommen uit metadata tabel
             ResultSetMetaData md = result.getMetaData();
             int aantalKolommen = md.getColumnCount();
@@ -1273,22 +1274,17 @@ public class FullHouse extends javax.swing.JFrame {
         try {
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat2 = conn.createStatement();
-            ResultSet result = stat2.executeQuery("SELECT count(Deelname.SpelerID) "
-                    + "as 'Speler ID' FROM Deelname\n"
-                    + " where Deelname.toernooiID = '" + toernooiID + "'\n"
-                    + " AND Deelname.betaaldJN like 'J'\n"
-                    + " AND Deelname.actiefInToernooiJN like 'J'\n"
-                    + " order by Deelname.spelerID");
+            ResultSet result = stat2.executeQuery("SELECT count(Deelname.spelerID)\n"
+                    + " FROM Deelname\n"
+                    + " WHERE Deelname.toernooiID = '" + toernooiID + "'");
             while (result.next()) {
-                // aantalActieveSpelersRonde zijn het totaal aantal deelnemers 
-                // die ingeschreven en betaald hebben
+                // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
                 int aantalActieveSpelersRonde = result.getInt(1);
                 System.out.println(aantalActieveSpelersRonde);
             }
-            int i = 0;
-            ModelItemMaxAantalSpelersSpelSoort maxAantalSpelersSpelSoortAll = new ModelItemMaxAantalSpelersSpelSoort();
-            ResultSet result2 = stat2.executeQuery("SELECT Tafel.toernooiID, \n"
+            ResultSet result2 = stat2.executeQuery("SELECT Tafel.ToernooiID, \n"
                     + "Tafel.rondeNummer, TafelCapaciteit.tafelNummer, \n"
+                    + "TafelCapaciteit.maxAantalSpelers, \n"
                     + "Spelsoort.aantalSpelersTafelSpelSoort\n"
                     + "FROM TafelCapaciteit\n"
                     + "inner join Tafel\n"
@@ -1297,18 +1293,13 @@ public class FullHouse extends javax.swing.JFrame {
                     + "on Tafel.toernooiID = Toernooi.toernooiID\n"
                     + "inner join Spelsoort\n"
                     + "on Spelsoort.spelNaam = Toernooi.spelNaam\n"
-                    + "where Tafel.ToernooiID = '" + toernooiID + "' \n"
-                    + "order by Toernooi.toernooiID");
+                    + "where Tafel.ToernooiID = '" + toernooiID 
+                    + "' AND Tafel.rondeNummer = \n"
+                    + rondeNRTafelIndeling + " order by Tafel.tafelnummer");
             while (result2.next()) {
-                // aantalSpelersTafelSpelSoort zijn het maximaal aantal spelers 
-                // per spelsoort
-                maxAantalSpelersSpelSoortAll.toernooiID = result2.getInt(1);
-                maxAantalSpelersSpelSoortAll.maxAantalSpelersSpelSoort = result2.getInt(4);
-                
-                System.out.println("rij index:  " + i);
-                System.out.println("toernooiID in modelitem: " + maxAantalSpelersSpelSoortAll.toernooiID);
-                System.out.println("maxAantalSpelersSpelSoort in modelitem: " + maxAantalSpelersSpelSoortAll.maxAantalSpelersSpelSoort);
-                i++;
+                // aantalActieveSpelersRonde zijn het totaal aantal deelnemers die ingeschreven en betaald hebben
+                int maxAantalSpelersTafel = result2.getInt(3);
+                System.out.println(maxAantalSpelersTafel);
             /*
                 for (maxAantalSpelersTafel = 2; maxAantalSpelersTafel < aantalSpelersTafelSpelSoort; maxAantalSpelersTafel++){
             if(( x % y) == (0)) {
