@@ -864,6 +864,8 @@ public class FullHouse extends javax.swing.JFrame {
     }//GEN-LAST:event_jtInschrijvingenMouseClicked
 
     private void jtDeelnameRegistratieMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDeelnameRegistratieMousePressed
+        jtWijzigInschrijving.removeAll();
+        jtWijzigInschrijving.repaint();
         selecteerToernooi3();
         vulDeelname();
 
@@ -1597,11 +1599,9 @@ public class FullHouse extends javax.swing.JFrame {
     }
     
     private void wijzigDeelname() {
-        //vul met 1 voor 't geval er geen rij is geselecteerd en er toch wordt opgeslagen, voorkomt vastloper indexoutofbounds
-        int selectieWijzigDeelname = 1;       
-        selectieWijzigDeelname = jtWijzigInschrijving.getSelectedRow();
-        System.out.println("1592 rij index:"+ selectieWijzigDeelname);
-        String speler = (String)jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 0).toString();
+            try {
+                int selectieWijzigDeelname = jtInschrijvingen.getSelectedRow();
+            String speler = (String) jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 0).toString();
         Object spelerID = Integer.parseInt(speler);
         // Object spelerNaam = jtWijzigInschrijving.getValueAt(selectieWijzigDeelname,1);
         Object IDtoernooi = jtWijzigInschrijving.getValueAt(selectieWijzigDeelname, 2);
@@ -1613,15 +1613,18 @@ public class FullHouse extends javax.swing.JFrame {
         } else {
             actiefInToernooi = "'N'";
     
-        }
-        try {
+            
             Connection conn = SimpleDataSourceV2.getConnection();
             Statement stat = conn.createStatement();
             stat.executeUpdate("UPDATE pokerdatabase.Deelname (spelerID, toernooiID, betaaldJN, mailOfTelefoon, actiefInToernooiJN) VALUES\n"
                     + " (" + spelerID + "," + IDtoernooi + "," + betaald + "," + mailOfTelefoon + "," + actiefInToernooi + ")");
-    
+            }
         } catch (SQLException f) {
             System.out.println("SQL fout bij vullen lijst: " + f);
+            } catch (NullPointerException g) {
+                System.out.println(g);
+            } catch (IndexOutOfBoundsException h) {
+                System.out.println(h);
         }
     
     }
